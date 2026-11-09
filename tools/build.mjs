@@ -112,6 +112,8 @@ async function build() {
   const css = await readFile(join(ROOT, 'styles.css'), 'utf8');
   const icon = await readFile(join(ROOT, 'icons', 'icon-180.png'));
   const manifest = JSON.parse(await readFile(join(ROOT, 'manifest.webmanifest'), 'utf8'));
+  const packageJson = JSON.parse(await readFile(join(ROOT, 'package.json'), 'utf8'));
+  const release = packageJson.version || '0.0.0';
 
   const sources = new Map();
   for (const name of MODULES) {
@@ -156,7 +158,13 @@ async function build() {
   const manifestData =
     'data:application/manifest+json,' + encodeURIComponent(JSON.stringify(manifest));
 
-  let output = html
+  const version = await assetVersion(release);
+  const versionTag =
+    '<meta name="app-version" content="' + release + '+' + version + '" />';
+
+  const siteHtml = html.replace('<meta name="app-version" content="dev" />', versionTag);
+
+  let output = siteHtml
     .replace(
       '<link rel="stylesheet" href="styles.css" />',
       '<style>\n' + css + '\n</style>'
@@ -184,7 +192,6 @@ async function build() {
   const kb = (Buffer.byteLength(output) / 1024).toFixed(1);
   console.log('built ' + OUT_FILE + ' (' + kb + ' KB, single file, runs from file://)');
 
-  const version = await assetVersion();
   const swSource = await readFile(join(ROOT, 'sw.js'), 'utf8');
   if (!/const CACHE = '[^']+'/.test(swSource)) {
     throw new Error('sw.js has no CACHE constant to replace');
@@ -195,17 +202,24 @@ async function build() {
   for (const asset of SITE_ASSETS) {
     const target = join(SITE_DIR, asset);
     await mkdir(dirname(target), { recursive: true });
+    if (asset === 'index.html') {
+      await writeFile(target, siteHtml, 'utf8');
+      continue;
+    }
     await copyFile(join(ROOT, asset), target);
   }
   await writeFile(join(SITE_DIR, 'sw.js'), sw, 'utf8');
   await mkdir(join(SITE_DIR, 'dist'), { recursive: true });
   await writeFile(join(SITE_DIR, 'dist', 'solitaire.html'), output, 'utf8');
 
-  console.log('built ' + SITE_DIR + ' (service worker cache: solitaire-' + version + ')');
+  console.log(
+    'built ' + SITE_DIR + ' (version ' + release + ', service worker cache: solitaire-' + version + ')'
+  );
 }
 
-async function assetVersion() {
+async function assetVersion(release) {
   const hash = createHash('sha256');
+  hash.update(release);
   for (const asset of SITE_ASSETS) {
     hash.update(asset);
     hash.update(await readFile(join(ROOT, asset)));

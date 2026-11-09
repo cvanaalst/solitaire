@@ -814,6 +814,14 @@ body {
   transform: translateY(1px);
 }
 
+.splash-version {
+  margin: 8px 0 0;
+  font-size: 11px;
+  letter-spacing: 0.6px;
+  color: rgba(244, 247, 245, 0.4);
+  font-variant-numeric: tabular-nums;
+}
+
 .splash-foot {
   margin: 22px 0 0;
   font-size: 13px;

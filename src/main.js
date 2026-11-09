@@ -48,6 +48,7 @@ const toast = document.getElementById('toast');
 const confirmDialog = document.getElementById('confirm');
 const confirmDetail = document.getElementById('confirm-detail');
 const giveUpButton = document.getElementById('btn-giveup');
+const splashVersion = document.getElementById('splash-version');
 
 const renderer = new Renderer(tableEl);
 
@@ -571,10 +572,45 @@ function renderRules() {
     notes.map((note) => '<p>' + note + '</p>').join('');
 }
 
+let pendingUpdateMessage = '';
+
+function showVersion() {
+  const meta = document.querySelector('meta[name="app-version"]');
+  const value = meta ? meta.getAttribute('content') : '';
+
+  if (!value || value === 'dev') {
+    if (splashVersion) splashVersion.textContent = 'development build';
+    return;
+  }
+
+  const [release, build] = value.split('+');
+  if (splashVersion) {
+    splashVersion.textContent = build ? 'Version ' + release + ' (' + build + ')' : 'Version ' + release;
+  }
+
+  try {
+    const previous = localStorage.getItem('solitaire.version');
+    if (previous && previous !== value) {
+      const previousRelease = previous.split('+')[0];
+      pendingUpdateMessage = previousRelease === release
+        ? 'Repaired and updated to version ' + release
+        : 'Updated to version ' + release;
+    }
+    localStorage.setItem('solitaire.version', value);
+  } catch (error) {
+    void error;
+  }
+}
+
 function dismissSplash() {
   if (splash.classList.contains('hidden')) return;
   splash.classList.add('played');
   splash.classList.add('hidden');
+  if (pendingUpdateMessage) {
+    const message = pendingUpdateMessage;
+    pendingUpdateMessage = '';
+    showToast(message);
+  }
 }
 
 function startTimer() {
@@ -786,6 +822,7 @@ window.addEventListener('pagehide', () => {
 });
 
 async function boot() {
+  showVersion();
   const requested = location.hash.replace('#', '').toLowerCase();
   let startVariant = 'klondike';
   let startOptions = null;

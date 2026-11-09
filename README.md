@@ -59,6 +59,17 @@ HOST=0.0.0.0 npm run dev
 
 Then open the printed `http://<your-ip>:8123/` on the device. Both machines must be on the same network.
 
+## Releasing
+
+The version lives in `package.json`. To publish a new version:
+
+```bash
+npm version patch        # or minor, or major
+git push
+```
+
+The build stamps the version and a hash of the assets into the page, so the splash screen always shows exactly which build is running — `Version 1.0.1 (3f9c2ab10e)`. The service worker cache name is derived from that same hash, so every release produces a fresh cache, and the app tells you when it has updated itself.
+
 ## Deploying
 
 Every push to `main` runs the GitHub Actions workflow in `.github/workflows/pages.yml`, which tests the code, builds the site and deploys it to GitHub Pages. The published URL is <https://cvanaalst.github.io/solitaire/>.
