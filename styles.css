@@ -894,18 +894,47 @@ body {
   justify-content: center;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 900px) {
   #controls {
     flex-direction: column;
     align-items: stretch;
+    gap: 8px;
+    padding: 8px 12px 12px;
   }
-  .tabs {
-    justify-content: center;
+
+  .tab-groups {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 6px;
   }
+
+  #variant-tabs {
+    justify-content: flex-start;
+    max-width: 100%;
+  }
+
   .control-buttons {
-    justify-content: center;
+    justify-content: space-between;
+    gap: 6px;
+  }
+
+  .control {
+    flex: 1 1 0;
+    min-width: 0;
+    padding: 10px 8px;
+    font-size: 14px;
+    text-align: center;
+  }
+}
+
+@media (max-width: 640px) {
+  #controls {
+    padding: 6px 8px 10px;
   }
   .hud-title {
     font-size: 15px;
+  }
+  .hud-chip {
+    padding: 4px 8px;
   }
 }
