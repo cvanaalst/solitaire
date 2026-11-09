@@ -14,7 +14,9 @@ Klondike, FreeCell, Spider and more — an offline, installable card game for iP
 
 **[https://cvanaalst.github.io/solitaire/](https://cvanaalst.github.io/solitaire/)**
 
-On an iPad, open that link in Safari and choose **Share → Add to Home Screen**. It installs as a standalone, full-screen app with its own icon, and it keeps working with no connection at all.
+On an iPad or iPhone, open that link in Safari and choose **Share → Add to Home Screen**. It installs as a standalone, full-screen app with its own icon, and it keeps working with no connection at all.
+
+The step-by-step guide, in English and Dutch, is in **[docs/INSTALL.md](docs/INSTALL.md)**.
 
 There is also a single self-contained file, `dist/solitaire.html`, with everything inlined — [download it from the live site](https://cvanaalst.github.io/solitaire/dist/solitaire.html). AirDrop it to an iPad and it opens straight from the Files app: no server, no install.
 
@@ -80,6 +82,16 @@ To set this up on a fork:
 2. Push to `main` and the workflow does the rest.
 
 The service worker cache name is derived from a hash of the built assets, so every deploy produces a fresh cache and installed copies pick up new versions on the next reload without any manual step.
+
+## Installing on an iPad or iPhone
+
+The full guide lives in [docs/INSTALL.md](docs/INSTALL.md), in English and Dutch. In short:
+
+1. Open the game link in **Safari** (not Chrome, only Safari can install web apps on iOS)
+2. Tap **Share**, then **Add to Home Screen**
+3. Leave **Open as Web App** switched on and tap **Add**
+
+It works offline afterwards, and it updates itself the next time you open it.
 
 ## How the code is laid out
 
