@@ -1,0 +1,12 @@
+{
+  "name": "solitaire",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Klondike and FreeCell solitaire as an installable offline web app.",
+  "scripts": {
+    "test": "node --test \"tests/*.test.js\"",
+    "dev": "node tools/dev-server.mjs",
+    "build": "node tools/build.mjs"
+  }
+}

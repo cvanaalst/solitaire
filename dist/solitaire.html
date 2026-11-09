@@ -1,0 +1,4188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<title>Solitaire</title>
+<meta name="description" content="Klondike and FreeCell solitaire, playable offline on iPad." />
+<meta name="theme-color" content="#0e3b2e" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Solitaire" />
+<link rel="manifest" href="data:application/manifest+json,%7B%22name%22%3A%22Solitaire%22%2C%22short_name%22%3A%22Solitaire%22%2C%22description%22%3A%22Klondike%20and%20FreeCell%20solitaire.%22%2C%22start_url%22%3A%22.%2Findex.html%22%2C%22scope%22%3A%22.%2F%22%2C%22id%22%3A%22solitaire%22%2C%22display%22%3A%22standalone%22%2C%22orientation%22%3A%22any%22%2C%22background_color%22%3A%22%230e3b2e%22%2C%22theme_color%22%3A%22%230e3b2e%22%2C%22icons%22%3A%5B%7B%22src%22%3A%22icons%2Ficon-192.png%22%2C%22sizes%22%3A%22192x192%22%2C%22type%22%3A%22image%2Fpng%22%2C%22purpose%22%3A%22any%22%7D%2C%7B%22src%22%3A%22icons%2Ficon-512.png%22%2C%22sizes%22%3A%22512x512%22%2C%22type%22%3A%22image%2Fpng%22%2C%22purpose%22%3A%22any%22%7D%5D%7D" />
+<link rel="apple-touch-icon" href="data:image/png;base64,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" />
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAAIN0lEQVR42u3dyXMUdRjG8d9NZQmEtQTZAgmQkBAIJIQthCSERcUNN1SQC1y9UEUVJXgSL1ZBWeUR/QMyM0DIxr6USXnAm54oqkAv3DjpxdJ3mIAj8+tlunv6ebvnqfpelKmaTL+f6W16esz8I3sZs2bmf76XMWuCYw9j1oiDueA4vIcxa2be4d2MWTPzDu1mzBpxMOJgQXB81s+YNeJgxMGC4Pi0nzFrgmMXY9aIg7ng+GQXY9YERx9j1szcg32MWSMORhwsCI6PexmzRhyMOFgQHB/1MmZNcPQwZo04mAuOD3sYsyY4djJmzcz5YKeqTv54LvfT2D9//1lVyUuWF65tFopwHPn2y98fP6w2FsXJy5eFQBwlK4wfzlUzi+JkUajB8X43PHm70ERx+fWHgrngcbQcO0ANpcliIY7un3+7RwqlyWJRgONAN7CWo1xtOK88jh7ATkdw7AB28vxZInDcMz1/FjsdM+e9HcByd8eIwPHkx90x7HSIgzjccHQBy90dJQJnHKPY6ZjZ73YBIw53HNjpEAdxEAdxBMHxznZgxOGBAzod4iAO4iCOIDje3g4sd4c4nHHcGcVOR3BsA0YcXjiQ0zGz39oGjDg8cECnk1ocjzPZJxPjlZ6fPIU8UYpxbAWWuzMS1ZDunzj166Gjt2uXWJN/kgeE5BLPsxThGMFOx8zavxVYSBx/PXzw6LvvJ5o6nKZVmjy43PkVTJT7LPKHyZ8XEgd2OgnGIUvf/7RK+6VvvycReYA8LMyzyB9JHLHikHdkWe9jl2RDYH1/y/902XyUlfypwVYhCnC8uQVY7vZIgD3NSGZWPLwXdirlP6PC97wA+62ycLDTSRiOyGWUDi+GpyCO6HFUbmzPhxfDUyQKxxtbgPnHIZvtio6tsH2JfGtSmv/9jzwO6HQEx2Zg/nHEMLZ4khdSDg7kdMys1zcD84nj/olT6ZBRSF6OXxzQ6SQARwwblPjzs3HRgKMTWO72cLWtNvyvPGThYKdjZu3rBJa75Y0jfTIKeeO4NYydjqnd1wks64Uj5DlyzXmeWZeFg52OdhxRncNWmLw09Tj2bgLmiSOtMvxsWfI4oNNRjaPS5yvhuZ8wVYBjzyZg7jhSvMPhZ7cjjwM6HdU4UrzD4We3QwOODmDE4YUDOR1Tu7sDWPbmcDV8nhLscxZZONjpqMaRbhmeBywacLQDy94cIg5nHEPY6Zja/nZgxOGBAzodM7O/HRhxuOPATkc1jpBfC9CfvEDdOHZtBOaOo9oPZQUHdDrEQRwuOPo2AsveGOLpc0ccN4aw01GNo9o/eFOAYwMwdxzV/pF9HgdyOmZm7wZgnjhSfAbd8zsKeRzQ6WjHkcqri31eY6wBRxuw7I3L2K9Aqt3heIrjMnY6ZmZPGzBPHNV89XkeB3Q6ZkZPGzA/OFJ5tsPz6uICDux0EoDjycR4+nD4ue+UAhw71wPLXr9cVd+iLuu71LJwsNNJBo6UnSr1eaMwBTi61wPziSNl36X2eYuOPA7odJKBI00nPHzef0EJjnXA/ONIzcrD/519nuJATsfM2LEOmH8c6Vh5+F9tTOKATidJOJJ+2OL/hk96cLQCy14fjPOuxYk4SCnCMYidjpnR1Qose22w3Fu3JvTCUvfLRe04rg1ip2NqulqBZcrHkdA90wB3uJaFg52OqdneCiwAjiRuXILdHj+PAzodwbEWWDAcydq4BNigFOFATiepOCL84YRKH6EE/tUVBTi2rQUWGEdSPq0N86tNeRzQ6SQYh/7rxEL+/JsGHC3AQuLQfCmQn8t5fOBATsfUbG0BlrkaFodOH+Fl5HFcHcROJw04tB28BD48UYijGVjm6qVIlqOeg5cwhyclOC5hp2NqtjQDiwqHEh8RypjEAZ1OenAUfAC3L/LUEcpQgWP65mZg0eIA7p9GsgdaigM7HcGxBlglcMTvoxIynuFATiedOOL8cC7Mb06rx9G5BljmSqVwxHP+NOQ5UA8cVy5hp5NmHBU9hIn2wEQtjiZglcZRoV2QCu1k2HAgp2Omb2oCFg+OaDcxFd2UvIgDOp1qwRHJWZDIz2Tox9EILHPlYmzLOuSXX8r6yklEOC5ip2OmdzQCix9H4SqhsvZS5cFhrtkJhQM6nWrEUdYqJP4VhiIc09obgWXGYDg8VyGoFcZ/OMYuYqcjOFYDw+JwOdCN52DVBw7kdIjDcqAb28GqehwbVwNTgqPYhxIZkzig0yGO//nQI0MJjlXAVOHQ1lMcyOmYaRtWASMODxzQ6RAHcbjgaFsJLDN6gQgccYxewE6HOIiDOIgjAI6p61cCGyAO52ThYKcjOBqAEYcXDuR0iIM4XHCsawBGHB44oNMhDuJww1EPjDi8cCCnY6a21gMbGCEOZxwjF7DTIQ7icMGxdgWwgZEcETjjyGGnQxzEQRzEEQDHlJYVwIjDHQd2OoJjOTDi8MKBnA5xEIcLjublwAaGicMZx3AOOx0wjuPffEUETsnCgeOoA1bf20kETsnCwU7HTFlTh23i3jgdWH4H8944fDR4HPU9XHnYVhs9nQpwNC2Dd/CLY9RQnCwQDXNRgUM6fuY0TUzuh545rWQoWnAU1h+P/nhQzSzk5StZZzzD0bhMVce/Pj0wlK26UxpDWXnh2mZhXmlcypg14mAuOFYvZcwacTAXHKuWMGaNOBhxsCA4Vi5mzBpxMOJgQXA0LGbMmnm5YRFj1oiDueCoX8SYNeJgLjhWvMaYNeJgxMGC4Fi+kDFrxMGIgwXBUbeQMWvmpboFjFkjDuaCY9kCxqwRB3PBsfRVxqwRB3PsXx0XPyHKdjANAAAAAElFTkSuQmCC" />
+<style>
+:root {
+  --felt-1: #17624a;
+  --felt-2: #0b3728;
+  --felt-3: #072019;
+  --ink: #f4f7f5;
+  --ink-dim: rgba(244, 247, 245, 0.62);
+  --glass: rgba(255, 255, 255, 0.1);
+  --glass-strong: rgba(255, 255, 255, 0.18);
+  --accent: #ffd166;
+  --accent-2: #7ee0b8;
+  --danger: #ff8f8f;
+  --radius: 14px;
+  --font: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overscroll-behavior: none;
+  touch-action: manipulation;
+}
+
+body {
+  font-family: var(--font);
+  color: var(--ink);
+  background:
+    radial-gradient(120% 90% at 50% -10%, var(--felt-1) 0%, var(--felt-2) 45%, var(--felt-3) 100%);
+  -webkit-text-size-adjust: 100%;
+}
+
+#app {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  height: 100dvh;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+}
+
+#hud {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 16px;
+  flex: 0 0 auto;
+}
+
+.hud-left,
+.hud-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.hud-title {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  white-space: nowrap;
+}
+
+.banner {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--danger);
+  opacity: 0;
+  transition: opacity 160ms ease;
+  max-width: 46vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.banner.visible {
+  opacity: 1;
+}
+
+.banner.dead {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.control.danger {
+  background: rgba(255, 143, 143, 0.16);
+  border-color: rgba(255, 143, 143, 0.4);
+  color: #ffc9c9;
+}
+
+.control.danger:active {
+  background: rgba(255, 143, 143, 0.28);
+}
+
+.control.alert {
+  background: var(--danger);
+  border-color: transparent;
+  color: #3d0808;
+  font-weight: 700;
+}
+
+.hud-chip {
+  font-size: 13px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-dim);
+  background: var(--glass);
+  border-radius: 999px;
+  padding: 5px 11px;
+  white-space: nowrap;
+}
+
+.icon-button {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  border: 1px solid var(--glass);
+  background: var(--glass);
+  color: var(--ink);
+  font-size: 17px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0;
+}
+
+.icon-button:active {
+  background: var(--glass-strong);
+}
+
+#board {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  margin: 0 8px;
+  border-radius: 18px;
+  background: rgba(0, 0, 0, 0.14);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
+#table {
+  position: absolute;
+  inset: 0;
+  touch-action: manipulation;
+}
+
+.slot {
+  position: absolute;
+  border-radius: calc(var(--cw) * 0.09);
+  border: 2px dashed rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.035);
+}
+
+.slot.is-target {
+  border: 2px solid var(--accent-2);
+  background: rgba(126, 224, 184, 0.12);
+  box-shadow: 0 0 0 3px rgba(126, 224, 184, 0.22);
+}
+
+.toast {
+  position: fixed;
+  left: 50%;
+  bottom: 96px;
+  transform: translate(-50%, 12px);
+  background: rgba(10, 34, 26, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 600;
+  padding: 11px 20px;
+  border-radius: 999px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 180ms ease, transform 180ms ease;
+  z-index: 60;
+  max-width: 82vw;
+  text-align: center;
+}
+
+.toast.visible {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
+
+.deal-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.deal-actions .control {
+  padding: 9px 16px;
+  font-size: 13px;
+  min-height: 38px;
+}
+
+.share-field {
+  width: 100%;
+  margin-top: 10px;
+  padding: 9px 11px;
+  border-radius: 9px;
+  border: 1px solid var(--glass);
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--ink);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+}
+
+.share-field[hidden] {
+  display: none;
+}
+
+.win-cards {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.win-card {
+  position: absolute;
+  top: -18vh;
+  left: 50%;
+  width: 62px;
+  height: 86px;
+  border-radius: 8px;
+  background: #fffdf7;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  font-weight: 700;
+  color: #16191f;
+  animation: winFall 2.8s cubic-bezier(0.3, 0.7, 0.6, 1) forwards;
+}
+
+.win-card.red {
+  color: #c2111f;
+}
+
+@keyframes winFall {
+  0% { transform: translate(-50%, -20vh) rotate(0deg); opacity: 0; }
+  8% { opacity: 1; }
+  100% { transform: translate(calc(-50% + var(--drift)), 108vh) rotate(var(--spin)); opacity: 0.85; }
+}
+
+.slot-mark {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(var(--cw) * 0.42);
+  color: rgba(255, 255, 255, 0.12);
+  pointer-events: none;
+}
+
+#file-warning {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  z-index: 30;
+}
+
+#file-warning[hidden] {
+  display: none;
+}
+
+.warning-card {
+  background: rgba(9, 38, 28, 0.94);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  padding: 22px 24px;
+  max-width: 520px;
+  line-height: 1.5;
+  font-size: 15px;
+}
+
+.warning-card h3 {
+  margin: 0 0 10px;
+  font-size: 19px;
+}
+
+.warning-card p {
+  margin: 8px 0;
+  color: var(--ink-dim);
+}
+
+.warning-card ul {
+  margin: 8px 0 0;
+  padding-left: 20px;
+  color: var(--ink-dim);
+}
+
+.warning-card li {
+  margin-bottom: 8px;
+}
+
+.warning-card code {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+  padding: 1px 6px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 13px;
+  color: var(--ink);
+}
+
+.card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: var(--cw);
+  height: var(--ch);
+  transition: transform 190ms cubic-bezier(0.22, 0.9, 0.28, 1);
+  will-change: transform;
+  touch-action: none;
+}
+
+.card.is-dragging {
+  transition: none;
+  filter: drop-shadow(0 14px 20px rgba(0, 0, 0, 0.5));
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  border-radius: calc(var(--cw) * 0.09);
+  overflow: hidden;
+}
+
+.card-front {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: #fffdf7;
+  border: 1px solid rgba(0, 0, 0, 0.28);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
+  color: #16191f;
+}
+
+.card-front.red {
+  color: #c2111f;
+}
+
+.card-back {
+  display: block;
+  background:
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.16) 0 3px, transparent 3px 7px),
+    linear-gradient(150deg, #3363bd 0%, #17306e 100%);
+  border: 2px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
+}
+
+.card.is-up .card-front {
+  display: flex;
+}
+
+.card.is-up .card-back {
+  display: none;
+}
+
+.card.is-selected .card-face {
+  box-shadow: 0 0 0 3px var(--accent), 0 10px 18px rgba(0, 0, 0, 0.45);
+}
+
+.card.is-hint .card-face {
+  box-shadow: 0 0 0 3px var(--accent-2), 0 0 22px rgba(126, 224, 184, 0.6);
+  animation: pulse 900ms ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { filter: brightness(1); }
+  50% { filter: brightness(1.18); }
+}
+
+.corner {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: calc(var(--cw) * 0.03);
+  line-height: 1;
+  font-weight: 700;
+}
+
+.corner-tl {
+  top: 1.5%;
+  left: 4%;
+}
+
+.corner-br {
+  bottom: 1.5%;
+  right: 4%;
+  transform: rotate(180deg);
+}
+
+.rank {
+  font-size: min(calc(var(--cw) * 0.28), calc(var(--strip, 999px) * 0.7));
+}
+
+.suit {
+  font-size: min(calc(var(--cw) * 0.26), calc(var(--strip, 999px) * 0.64));
+}
+
+.pip {
+  font-size: calc(var(--cw) * 0.5);
+  line-height: 1;
+}
+
+.badge {
+  position: absolute;
+  min-width: calc(var(--cw) * 0.32);
+  height: calc(var(--cw) * 0.32);
+  padding: 0 calc(var(--cw) * 0.07);
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.72);
+  color: #fff;
+  font-size: calc(var(--cw) * 0.19);
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+#controls {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 16px 14px;
+}
+
+.tab-groups {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tabs {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  flex: 0 0 auto;
+  background: var(--glass);
+  padding: 4px;
+  border-radius: 999px;
+}
+
+.tabs[hidden] {
+  display: none;
+}
+
+.tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.tab {
+  flex: 0 0 auto;
+}
+
+.tab {
+  border: 0;
+  background: transparent;
+  color: var(--ink-dim);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 8px 16px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.tab.active {
+  background: var(--ink);
+  color: #10352a;
+}
+
+.control-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.control {
+  white-space: nowrap;
+  border: 1px solid var(--glass);
+  background: var(--glass);
+  color: var(--ink);
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 600;
+  padding: 11px 20px;
+  border-radius: 12px;
+  cursor: pointer;
+  min-height: 44px;
+}
+
+.control.primary {
+  background: var(--accent);
+  border-color: transparent;
+  color: #3a2c00;
+}
+
+.control.subtle {
+  background: transparent;
+  color: var(--ink-dim);
+  width: 100%;
+  margin-top: 12px;
+}
+
+.control:active {
+  transform: translateY(1px);
+}
+
+.panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(420px, 90vw);
+  padding: 20px;
+  background: #10281f;
+  box-shadow: -18px 0 40px rgba(0, 0, 0, 0.45);
+  transform: translateX(100%);
+  transition: transform 220ms cubic-bezier(0.22, 0.9, 0.28, 1);
+  z-index: 40;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+
+.panel.visible {
+  transform: translateX(0);
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.panel-header h2 {
+  font-size: 18px;
+  margin: 0;
+}
+
+.panel-section {
+  margin-bottom: 26px;
+}
+
+.panel-section h3 {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--ink-dim);
+  margin: 0 0 12px;
+  font-weight: 700;
+}
+
+.prose h4 {
+  font-size: 15px;
+  margin: 14px 0 4px;
+}
+
+.prose p {
+  margin: 0 0 10px;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--ink-dim);
+}
+
+.prose ul {
+  margin: 0 0 10px;
+  padding-left: 18px;
+  color: var(--ink-dim);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.prose li {
+  margin-bottom: 6px;
+}
+
+.prose strong {
+  color: var(--ink);
+}
+
+.chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 96px;
+  margin: 6px 0 4px;
+  padding-bottom: 2px;
+}
+
+.chart-col {
+  flex: 1 1 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  height: 100%;
+  min-width: 0;
+}
+
+.chart-bar {
+  width: 100%;
+  min-height: 2px;
+  background: linear-gradient(180deg, var(--accent-2), rgba(126, 224, 184, 0.45));
+  border-radius: 3px 3px 0 0;
+  transition: height 220ms ease;
+}
+
+.chart-bar.won {
+  background: linear-gradient(180deg, var(--accent), rgba(255, 209, 102, 0.45));
+}
+
+.chart-label {
+  font-size: 8.5px;
+  letter-spacing: -0.2px;
+  color: var(--ink-dim);
+  margin-top: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.chart-caption {
+  font-size: 12px;
+  color: var(--ink-dim);
+  margin: 2px 0 0;
+}
+
+.stat-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.stat-tile {
+  background: var(--glass);
+  border-radius: 10px;
+  padding: 10px 12px;
+}
+
+.stat-tile-value {
+  font-size: 20px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+.stat-tile-label {
+  font-size: 11px;
+  color: var(--ink-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-top: 2px;
+}
+
+.splash {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background:
+    radial-gradient(120% 90% at 50% -10%, var(--felt-1) 0%, var(--felt-2) 45%, var(--felt-3) 100%);
+  opacity: 1;
+  transition: opacity 420ms ease;
+}
+
+.splash.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.splash-inner {
+  text-align: center;
+  max-width: 460px;
+}
+
+.splash-logo {
+  position: relative;
+  height: 168px;
+  margin-bottom: 26px;
+}
+
+.logo-slot {
+  position: absolute;
+  left: 50%;
+  top: 8px;
+  width: 92px;
+  height: 128px;
+  margin-left: -46px;
+  animation: cardDeal 0.7s cubic-bezier(0.2, 0.9, 0.3, 1) both;
+}
+
+.logo-slot-1 {
+  transform: translateX(-76px) rotate(-15deg);
+  animation-delay: 0.15s;
+}
+
+.logo-slot-2 {
+  z-index: 2;
+  animation-delay: 0.35s;
+}
+
+.logo-slot-3 {
+  transform: translateX(76px) rotate(15deg);
+  animation-delay: 0.55s;
+}
+
+.logo-card {
+  position: absolute;
+  inset: 0;
+  border-radius: 9px;
+  background: #fffdf7;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.45);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #16191f;
+  animation: cardFloat 3.6s ease-in-out infinite;
+}
+
+.logo-card .logo-rank {
+  font-size: 34px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+.logo-card .logo-suit {
+  font-size: 34px;
+  line-height: 1.1;
+}
+
+.logo-card .logo-suit.red {
+  color: #c2111f;
+}
+
+@keyframes cardFloat {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-9px) rotate(2.5deg); }
+}
+
+.splash.played .logo-card {
+  animation: none;
+}
+
+@keyframes cardDeal {
+  0% { opacity: 0; top: -140px; }
+  100% { opacity: 1; top: 8px; }
+}
+
+.splash-title {
+  font-size: 42px;
+  margin: 0 0 6px;
+  letter-spacing: 1px;
+}
+
+.splash-tagline {
+  font-size: 19px;
+  margin: 0 0 4px;
+  color: var(--ink);
+}
+
+.splash-credit {
+  font-size: 15px;
+  margin: 0 0 26px;
+  color: var(--ink-dim);
+  letter-spacing: 0.4px;
+}
+
+.splash-play {
+  border: 0;
+  background: var(--accent);
+  color: #3a2c00;
+  font-family: inherit;
+  font-size: 17px;
+  font-weight: 700;
+  padding: 14px 38px;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.35);
+}
+
+.splash-play:active {
+  transform: translateY(1px);
+}
+
+.splash-foot {
+  margin: 22px 0 0;
+  font-size: 13px;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+.panel-body {
+  flex: 1 1 auto;
+}
+
+.stat-row {
+  padding: 12px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.stat-name {
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.stat-value {
+  font-size: 14px;
+  color: var(--ink-dim);
+  padding: 2px 0;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(4, 20, 14, 0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms ease;
+  z-index: 50;
+  padding: 24px;
+}
+
+.overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.overlay-card {
+  background: #14372a;
+  border-radius: 20px;
+  padding: 28px 26px;
+  text-align: center;
+  max-width: 360px;
+  width: 100%;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.5);
+}
+
+.overlay-card h2 {
+  margin: 0 0 6px;
+  font-size: 26px;
+}
+
+.overlay-time {
+  font-size: 40px;
+  font-weight: 700;
+  margin: 10px 0 2px;
+  font-variant-numeric: tabular-nums;
+}
+
+.overlay-detail {
+  color: var(--ink-dim);
+  margin: 0 0 20px;
+}
+
+.overlay-actions {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+@media (max-width: 640px) {
+  #controls {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .tabs {
+    justify-content: center;
+  }
+  .control-buttons {
+    justify-content: center;
+  }
+  .hud-title {
+    font-size: 15px;
+  }
+}
+
+</style>
+</head>
+<body>
+<div id="app">
+  <header id="hud">
+    <div class="hud-left">
+      <button id="btn-stats" class="icon-button" aria-label="Statistics">&#9776;</button>
+      <div class="hud-title">
+        <span id="variant-name">Solitaire</span>
+        <span id="banner" class="banner"></span>
+      </div>
+    </div>
+    <div class="hud-right">
+      <span id="timer" class="hud-chip">0:00</span>
+      <span id="moves" class="hud-chip">0 moves</span>
+    </div>
+  </header>
+
+  <main id="board">
+    <div id="table"></div>
+    <div id="file-warning" hidden>
+      <div class="warning-card">
+        <h3>Open this over a web server</h3>
+        <p>
+          Browsers block JavaScript modules on <code>file://</code> pages, so the board
+          cannot start when this file is opened straight from the Finder.
+        </p>
+        <p>Pick either option:</p>
+        <ul>
+          <li><strong>Play it now:</strong> open <code>dist/solitaire.html</code> — one self-contained file that works from anywhere.</li>
+          <li><strong>Serve it:</strong> run <code>npm run dev</code> in this folder and open the printed URL.</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <footer id="controls">
+    <div class="tab-groups">
+      <div id="variant-tabs" class="tabs"></div>
+      <div id="option-tabs" class="tabs"></div>
+    </div>
+    <div class="control-buttons">
+      <button id="btn-undo" class="control">Undo</button>
+      <button id="btn-hint" class="control">Hint</button>
+      <button id="btn-giveup" class="control danger">Give up</button>
+      <button id="btn-new" class="control primary">New</button>
+    </div>
+  </footer>
+</div>
+
+<section id="panel" class="panel">
+  <div class="panel-header">
+    <h2>Solitaire</h2>
+    <button id="btn-stats-close" class="icon-button" aria-label="Close">&#10005;</button>
+  </div>
+  <div class="panel-body">
+    <div class="panel-section">
+      <h3>This deal</h3>
+      <div id="deal-body" class="prose"></div>
+      <div class="deal-actions">
+        <button id="btn-again" class="control">Deal again</button>
+        <button id="btn-daily" class="control">Daily deal</button>
+        <button id="btn-share" class="control">Share</button>
+      </div>
+      <input id="share-field" class="share-field" readonly hidden />
+    </div>
+    <div class="panel-section">
+      <h3>How to play</h3>
+      <div id="howto-body" class="prose"></div>
+    </div>
+    <div class="panel-section">
+      <h3>Rules</h3>
+      <div id="rules-body" class="prose"></div>
+    </div>
+    <div class="panel-section">
+      <h3>Statistics</h3>
+      <div id="stats-body" class="prose"></div>
+    </div>
+  </div>
+  <button id="btn-reset-stats" class="control subtle">Reset statistics</button>
+</section>
+
+<div id="splash" class="splash">
+  <div class="splash-inner">
+    <div class="splash-logo" aria-hidden="true">
+      <div class="logo-slot logo-slot-1"><div class="logo-card"><span class="logo-rank">A</span><span class="logo-suit">&#9824;</span></div></div>
+      <div class="logo-slot logo-slot-2"><div class="logo-card"><span class="logo-rank">K</span><span class="logo-suit red">&#9829;</span></div></div>
+      <div class="logo-slot logo-slot-3"><div class="logo-card"><span class="logo-rank">Q</span><span class="logo-suit red">&#9830;</span></div></div>
+    </div>
+    <h1 class="splash-title">Solitaire</h1>
+    <p class="splash-tagline">Totally Ad-free for Opa</p>
+    <p class="splash-credit">designed by Butch</p>
+    <button id="splash-play" class="splash-play">Tap to play</button>
+    <p class="splash-foot">Klondike &middot; FreeCell &middot; Spider</p>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<div id="confirm" class="overlay">
+  <div class="overlay-card">
+    <h2>Give up this game?</h2>
+    <p id="confirm-detail">It counts as a game played, but not as a win.</p>
+    <div class="overlay-actions">
+      <button id="btn-confirm-giveup" class="control danger">Give up</button>
+      <button id="btn-cancel-giveup" class="control">Keep playing</button>
+    </div>
+  </div>
+</div>
+
+<div id="overlay" class="overlay">
+  <div class="win-cards" id="win-cards" aria-hidden="true"></div>
+  <div class="overlay-card">
+    <h2>You won</h2>
+    <div id="overlay-body"></div>
+    <div class="overlay-actions">
+      <button id="btn-new-overlay" class="control primary">New game</button>
+      <button id="btn-close-overlay" class="control">Close</button>
+    </div>
+  </div>
+</div>
+
+<script>
+window.__SOLITAIRE_INLINE__ = true;
+(function () {
+'use strict';
+/* src/cards.js */
+const SUITS = ['S', 'H', 'D', 'C'];
+
+const SUIT_SYMBOL = { S: '♠', H: '♥', D: '♦', C: '♣' };
+const SUIT_NAME = { S: 'spades', H: 'hearts', D: 'diamonds', C: 'clubs' };
+
+const RANK_LABEL = {
+  1: 'A', 2: '2', 3: '3', 4: '4', 5: '5', 6: '6', 7: '7',
+  8: '8', 9: '9', 10: '10', 11: 'J', 12: 'Q', 13: 'K',
+};
+
+function isRed(suit) {
+  return suit === 'H' || suit === 'D';
+}
+
+function makeDeck(suits = SUITS, copies = 1, options = {}) {
+  const maxRank = options.maxRank || 13;
+  const deck = [];
+  for (const suit of suits) {
+    for (let copy = 0; copy < copies; copy++) {
+      for (let rank = 1; rank <= maxRank; rank++) {
+        const suffix = copy === 0 ? '' : '#' + (copy + 1);
+        deck.push({ id: suit + rank + suffix, suit, rank, copy, faceUp: false });
+      }
+    }
+  }
+  return deck;
+}
+
+function secureRandomInt(max) {
+  const buffer = new Uint32Array(1);
+  const limit = Math.floor(4294967296 / max) * max;
+  let value;
+  do {
+    crypto.getRandomValues(buffer);
+    value = buffer[0];
+  } while (value >= limit);
+  return value % max;
+}
+
+function makeSeededRandomInt(seed) {
+  let state = seed >>> 0;
+  return (max) => {
+    state = (Math.imul(state, 1664525) + 1013904223) >>> 0;
+    return Math.floor((state / 4294967296) * max);
+  };
+}
+
+function shuffle(deck, randomInt = secureRandomInt) {
+  const out = deck.slice();
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = randomInt(i + 1);
+    const tmp = out[i];
+    out[i] = out[j];
+    out[j] = tmp;
+  }
+  return out;
+}
+
+/* src/variants.js */
+const VARIANTS = {
+  klondike: {
+    id: 'klondike',
+    name: 'Klondike',
+    tagline: 'The classic. Kings start empty columns.',
+    option: 'draw',
+  },
+  freecell: {
+    id: 'freecell',
+    name: 'FreeCell',
+    tagline: 'Pure logic, almost always winnable.',
+    option: 'suits',
+  },
+  spider: {
+    id: 'spider',
+    name: 'Spider',
+    tagline: 'Two decks of one suit. Build whole runs, King down to Ace.',
+    option: 'suits',
+  },
+  spiderette: {
+    id: 'spiderette',
+    name: 'Spiderette',
+    tagline: 'Spider with a single deck. Gentler, and no stock to deal.',
+    option: 'none',
+  },
+  fortyThieves: {
+    id: 'fortyThieves',
+    name: 'Forty Thieves',
+    tagline: 'One deck without the eights, tens or kings. Build in suit only.',
+    option: 'none',
+  },
+  yukon: {
+    id: 'yukon',
+    name: 'Yukon',
+    tagline: 'Seven long columns. Move any face up group, in order or not.',
+    option: 'none',
+  },
+};
+
+const VARIANT_LIST = Object.values(VARIANTS);
+
+const DEFAULT_OPTIONS = {
+  klondike: { drawCount: 1 },
+  freecell: { suits: 4, cells: 4 },
+  spider: { suits: 1 },
+  spiderette: {},
+  fortyThieves: {},
+  yukon: {},
+};
+
+const DIFFICULTY = {
+  klondike: {
+    1: 'Draw one card at a time, the harder and more traditional game.',
+    3: 'Draw three cards at a time, which makes the game noticeably easier.',
+  },
+  freecell: {
+    cells: {
+      4: 'Four free cells, the classic and hardest setting.',
+      6: 'Six free cells, which gives you more room to manoeuvre.',
+    },
+    suits: {
+      4: 'One standard deck of all four suits, the classic game.',
+      2: 'Two copies each of spades and hearts, so every rank appears twice.',
+      1: 'Four copies of a single suit, so every rank appears four times.',
+    },
+  },
+  spider: {
+    1: 'One suit, the hardest and most traditional Spider.',
+    2: 'Two suits, a little easier than one.',
+    4: 'All four suits, the easiest Spider to win.',
+  },
+};
+
+const SUIT_SETS = {
+  4: { suits: ['S', 'H', 'D', 'C'], copies: 1, alternateColors: true },
+  2: { suits: ['S', 'H'], copies: 2, alternateColors: true },
+  1: { suits: ['H'], copies: 4, alternateColors: false },
+};
+
+function foundationSuits(suits) {
+  const list = [];
+  for (const suit of suits) {
+    for (let i = 0; i < 4 / suits.length; i++) list.push(suit);
+  }
+  return list;
+}
+
+function normalizeOptions(variantId, options) {
+  const given = options || {};
+  if (variantId === 'klondike') {
+    return { drawCount: given.drawCount === 3 ? 3 : 1 };
+  }
+  if (variantId === 'spider') {
+    const suits = given.suits === 2 || given.suits === 4 ? given.suits : 1;
+    return { suits };
+  }
+  if (variantId === 'spiderette' || variantId === 'fortyThieves' || variantId === 'yukon') {
+    return {};
+  }
+  const suits = given.suits === 1 || given.suits === 2 ? given.suits : 4;
+  const cells = given.cells === 6 ? 6 : 4;
+  return { suits, cells };
+}
+
+function getSpec(variantId, options) {
+  const variant = VARIANTS[variantId];
+  if (!variant) throw new Error('Unknown variant: ' + variantId);
+  const settings = normalizeOptions(variantId, options);
+
+  if (variantId === 'klondike') {
+    return {
+      id: variantId,
+      name: variant.name,
+      tagline: variant.tagline,
+      suits: ['S', 'H', 'D', 'C'],
+      copies: 1,
+      tableauRows: [1, 2, 3, 4, 5, 6, 7],
+      foundations: 4,
+      freeCells: 0,
+      stock: true,
+      waste: true,
+      dealRows: false,
+      drawCount: settings.drawCount,
+      alternateColors: true,
+      sameSuit: false,
+      emptyColumn: 'king',
+      foundationRule: 'suit',
+      runLength: 13,
+      looseRun: false,
+      faceUpTop: 1,
+      maxRank: 13,
+      totalCards: 52,
+      foundationSuits: ['S', 'H', 'D', 'C'],
+    };
+  }
+
+  if (variantId === 'spider') {
+    const sets = {
+      1: { suits: ['S'], copies: 8 },
+      2: { suits: ['S', 'H'], copies: 4 },
+      4: { suits: ['S', 'H', 'D', 'C'], copies: 2 },
+    };
+    const set = sets[settings.suits];
+    const label = settings.suits === 1 ? '' : ' · ' + settings.suits + ' suits';
+    const foundations = [];
+    set.suits.forEach((suit) => {
+      for (let i = 0; i < 8 / set.suits.length; i++) foundations.push(suit);
+    });
+    return {
+      id: variantId,
+      name: variant.name + label,
+      tagline: variant.tagline,
+      suits: set.suits,
+      copies: set.copies,
+      tableauRows: [6, 6, 6, 6, 5, 5, 5, 5, 5, 5],
+      foundations: 8,
+      freeCells: 0,
+      stock: true,
+      waste: false,
+      dealRows: true,
+      drawCount: 1,
+      alternateColors: false,
+      sameSuit: true,
+      emptyColumn: 'any',
+      foundationRule: 'run',
+      runLength: 13,
+      looseRun: false,
+      faceUpTop: 1,
+      maxRank: 13,
+      totalCards: 104,
+      foundationSuits: foundations,
+    };
+  }
+
+  if (variantId === 'spiderette') {
+    return {
+      id: variantId,
+      name: variant.name,
+      tagline: variant.tagline,
+      suits: ['S', 'H', 'D', 'C'],
+      copies: 1,
+      tableauRows: [7, 7, 7, 7, 6, 6, 6, 6],
+      foundations: 4,
+      freeCells: 0,
+      stock: false,
+      waste: false,
+      dealRows: false,
+      drawCount: 1,
+      alternateColors: false,
+      sameSuit: true,
+      emptyColumn: 'any',
+      foundationRule: 'run',
+      runLength: 13,
+      looseRun: false,
+      faceUpTop: 1,
+      maxRank: 13,
+      totalCards: 52,
+      foundationSuits: ['S', 'H', 'D', 'C'],
+    };
+  }
+
+  if (variantId === 'fortyThieves') {
+    return {
+      id: variantId,
+      name: variant.name,
+      tagline: variant.tagline,
+      suits: ['S', 'H', 'D', 'C'],
+      copies: 1,
+      tableauRows: [4, 4, 4, 4, 4, 4, 4, 4, 4, 4],
+      foundations: 4,
+      freeCells: 0,
+      stock: false,
+      waste: false,
+      dealRows: false,
+      drawCount: 1,
+      alternateColors: false,
+      sameSuit: true,
+      emptyColumn: 'any',
+      foundationRule: 'run',
+      runLength: 10,
+      looseRun: false,
+      faceUpTop: 4,
+      maxRank: 10,
+      totalCards: 40,
+      foundationSuits: ['S', 'H', 'D', 'C'],
+    };
+  }
+
+  if (variantId === 'yukon') {
+    return {
+      id: variantId,
+      name: variant.name,
+      tagline: variant.tagline,
+      suits: ['S', 'H', 'D', 'C'],
+      copies: 1,
+      tableauRows: [1, 6, 7, 8, 9, 10, 11],
+      foundations: 4,
+      freeCells: 0,
+      stock: false,
+      waste: false,
+      dealRows: false,
+      drawCount: 1,
+      alternateColors: true,
+      sameSuit: false,
+      emptyColumn: 'king',
+      foundationRule: 'suit',
+      looseRun: true,
+      faceUpTop: 5,
+      maxRank: 13,
+      totalCards: 52,
+      foundationSuits: ['S', 'H', 'D', 'C'],
+    };
+  }
+
+  const set = SUIT_SETS[settings.suits];
+  const label = settings.suits === 4 ? '' : ' · ' + settings.suits + ' suit' + (settings.suits > 1 ? 's' : '');
+  return {
+    id: variantId,
+    name: variant.name + label,
+    tagline: variant.tagline,
+    suits: set.suits,
+    copies: set.copies,
+    tableauRows: [7, 7, 7, 7, 6, 6, 6, 6],
+    foundations: 4,
+    freeCells: settings.cells,
+    stock: false,
+    waste: false,
+    dealRows: false,
+    drawCount: 1,
+    alternateColors: set.alternateColors,
+    sameSuit: false,
+    emptyColumn: 'any',
+    foundationRule: 'suit',
+    looseRun: false,
+    faceUpTop: 1,
+    maxRank: 13,
+    totalCards: 52,
+    foundationSuits: foundationSuits(set.suits),
+  };
+}
+
+function getVariant(variantId) {
+  return VARIANTS[variantId];
+}
+
+/* src/engine.js */
+const PILE = {
+  STOCK: 'stock',
+  WASTE: 'waste',
+  TABLEAU: 'tableau',
+  FOUNDATION: 'foundation',
+  FREECELL: 'freecell',
+};
+
+const HISTORY_LIMIT = 60;
+
+function specFor(state) {
+  return getSpec(state.variantId, state.options);
+}
+
+function topOf(pile) {
+  return pile && pile.length ? pile[pile.length - 1] : null;
+}
+
+function clonePiles(piles) {
+  return {
+    stock: piles.stock.map((c) => ({ ...c })),
+    waste: piles.waste.map((c) => ({ ...c })),
+    freeCells: piles.freeCells.map((col) => col.map((c) => ({ ...c }))),
+    foundations: piles.foundations.map((col) => col.map((c) => ({ ...c }))),
+    tableau: piles.tableau.map((col) => col.map((c) => ({ ...c }))),
+  };
+}
+
+function createGame(variantId, options = {}) {
+  const settings = normalizeOptions(variantId, options);
+  const spec = getSpec(variantId, settings);
+  const seed = options.seed != null ? options.seed >>> 0 : randomSeed();
+  const randomInt = options.randomInt || makeSeededRandomInt(seed);
+  const deck = shuffle(makeDeck(spec.suits, spec.copies, { maxRank: spec.maxRank }), randomInt);
+  const piles = {
+    stock: [],
+    waste: [],
+    freeCells: Array.from({ length: spec.freeCells }, () => []),
+    foundations: Array.from({ length: spec.foundations }, () => []),
+    tableau: [],
+  };
+
+  let cursor = 0;
+  spec.tableauRows.forEach((count, column) => {
+    const cards = deck.slice(cursor, cursor + count);
+    cursor += count;
+    const faceUp = Math.min(spec.faceUpTop, cards.length);
+    cards.forEach((card, index) => {
+      card.faceUp = index >= cards.length - faceUp;
+    });
+    piles.tableau.push(cards);
+  });
+
+  if (spec.stock) piles.stock = deck.slice(cursor);
+
+  return {
+    variantId,
+    options: settings,
+    seed,
+    piles,
+    history: [],
+    moves: 0,
+    redeals: 0,
+    startedAt: Date.now(),
+    elapsedMs: 0,
+    won: false,
+  };
+}
+
+function oppositeColor(a, b) {
+  return isRed(a.suit) !== isRed(b.suit);
+}
+
+function canStackOnTableau(card, target, rule) {
+  const settings = rule || { alternateColors: true, emptyColumn: 'none' };
+  if (!card) return false;
+  if (!target) {
+    if (settings.emptyColumn === 'any') return true;
+    if (settings.emptyColumn === 'king') return card.rank === 13;
+    return false;
+  }
+  if (card.rank + 1 !== target.rank) return false;
+  if (settings.sameSuit && card.suit !== target.suit) return false;
+  if (settings.alternateColors && !oppositeColor(card, target)) return false;
+  return true;
+}
+
+function isCompleteRun(run, length = 13) {
+  if (!run || run.length !== length) return false;
+  const suit = run[0].suit;
+  for (let i = 0; i < length; i++) {
+    if (run[i].suit !== suit) return false;
+    if (run[i].rank !== length - i) return false;
+  }
+  return true;
+}
+
+function randomSeed() {
+  const buffer = new Uint32Array(1);
+  crypto.getRandomValues(buffer);
+  return buffer[0];
+}
+
+function canStackOnFoundation(card, foundationPile) {
+  const target = topOf(foundationPile);
+  if (!target) return card.rank === 1;
+  return target.suit === card.suit && card.rank === target.rank + 1;
+}
+
+function movableRun(state, from) {
+  const piles = state.piles;
+  if (from.pile === PILE.TABLEAU) {
+    const column = piles.tableau[from.index];
+    if (!column || from.cardIndex == null) return null;
+    const start = from.cardIndex;
+    const run = column.slice(start);
+    if (!run.length) return null;
+    if (!run[0].faceUp) return null;
+    const spec = specFor(state);
+    const rule = { alternateColors: spec.alternateColors, sameSuit: spec.sameSuit, emptyColumn: 'none' };
+    for (let i = 1; i < run.length; i++) {
+      if (!run[i].faceUp) return null;
+      if (!spec.looseRun && !canStackOnTableau(run[i], run[i - 1], rule)) return null;
+    }
+    return run;
+  }
+  if (from.pile === PILE.WASTE) {
+    const card = topOf(piles.waste);
+    return card ? [card] : null;
+  }
+  if (from.pile === PILE.FREECELL) {
+    const card = topOf(piles.freeCells[from.index]);
+    return card ? [card] : null;
+  }
+  return null;
+}
+
+function canMove(state, from, to) {
+  if (!from || !to) return false;
+  const spec = specFor(state);
+  const piles = state.piles;
+
+  if (from.pile === PILE.STOCK) {
+    if (!piles.stock.length) return false;
+    if (spec.dealRows) return to.pile === PILE.TABLEAU;
+    return to.pile === PILE.WASTE;
+  }
+  if (to.pile === PILE.STOCK) return false;
+
+  const run = movableRun(state, from);
+  if (!run) return false;
+
+  if (to.pile === PILE.TABLEAU) {
+    if (from.pile === PILE.TABLEAU && to.index === from.index) return false;
+    const target = topOf(piles.tableau[to.index]);
+    return canStackOnTableau(run[0], target, {
+      alternateColors: spec.alternateColors,
+      sameSuit: spec.sameSuit,
+      emptyColumn: spec.emptyColumn,
+    });
+  }
+  if (to.pile === PILE.FOUNDATION) {
+    if (spec.foundationRule === 'run') {
+      return piles.foundations[to.index].length === 0 && isCompleteRun(run, spec.runLength);
+    }
+    if (run.length !== 1) return false;
+    return canStackOnFoundation(run[0], piles.foundations[to.index]);
+  }
+  if (to.pile === PILE.FREECELL) {
+    if (run.length !== 1) return false;
+    return piles.freeCells[to.index].length === 0;
+  }
+  return false;
+}
+
+function performMove(piles, from, to, spec) {
+  if (from.pile === PILE.STOCK) {
+    const drawn = piles.stock.splice(Math.max(0, piles.stock.length - spec.drawCount));
+    drawn.forEach((card) => {
+      card.faceUp = true;
+      piles.waste.push(card);
+    });
+    return;
+  }
+
+  let moving;
+  if (from.pile === PILE.WASTE) {
+    moving = [piles.waste.pop()];
+  } else if (from.pile === PILE.FREECELL) {
+    moving = [piles.freeCells[from.index].pop()];
+  } else {
+    moving = piles.tableau[from.index].splice(from.cardIndex);
+  }
+
+  if (to.pile === PILE.WASTE) piles.waste.push(...moving);
+  else if (to.pile === PILE.FREECELL) piles.freeCells[to.index].push(...moving);
+  else if (to.pile === PILE.FOUNDATION) piles.foundations[to.index].push(...moving);
+  else if (to.pile === PILE.TABLEAU) piles.tableau[to.index].push(...moving);
+}
+
+function revealTop(piles, columnIndex) {
+  const column = piles.tableau[columnIndex];
+  if (!column || !column.length) return;
+  const card = topOf(column);
+  if (!card.faceUp) card.faceUp = true;
+}
+
+function pushHistory(state) {
+  const history = state.history.slice();
+  history.push({
+    piles: clonePiles(state.piles),
+    moves: state.moves,
+    redeals: state.redeals,
+    elapsedMs: state.elapsedMs,
+    won: state.won,
+  });
+  while (history.length > HISTORY_LIMIT) history.shift();
+  return history;
+}
+
+function canDealRow(state) {
+  const spec = specFor(state);
+  return spec.dealRows && state.piles.stock.length > 0;
+}
+
+function applyDealRow(state) {
+  if (!canDealRow(state)) return null;
+  const spec = specFor(state);
+  const history = pushHistory(state);
+  const piles = clonePiles(state.piles);
+  const columns = piles.tableau.length;
+
+  for (let i = 0; i < columns && piles.stock.length; i++) {
+    const card = piles.stock.pop();
+    card.faceUp = true;
+    piles.tableau[i].push(card);
+  }
+
+  return {
+    ...state,
+    piles,
+    history,
+    moves: state.moves + 1,
+    won: isWonPiles(piles, spec.totalCards),
+  };
+}
+
+function findCompleteRunColumn(state) {
+  const spec = specFor(state);
+  if (spec.foundationRule !== 'run') return null;
+  const piles = state.piles;
+  for (let i = 0; i < piles.tableau.length; i++) {
+    const column = piles.tableau[i];
+    if (column.length < spec.runLength) continue;
+    if (isCompleteRun(column.slice(column.length - spec.runLength), spec.runLength)) {
+      return { index: i, start: column.length - spec.runLength };
+    }
+  }
+  return null;
+}
+
+function autoCompleteRun(state) {
+  const found = findCompleteRunColumn(state);
+  if (!found) return null;
+  const target = state.piles.foundations.findIndex((col) => col.length === 0);
+  if (target < 0) return null;
+  const from = { pile: PILE.TABLEAU, index: found.index, cardIndex: found.start };
+  return applyMove(state, from, { pile: PILE.FOUNDATION, index: target });
+}
+
+function applyMove(state, from, to) {
+  const spec = specFor(state);
+  if (from.pile === PILE.STOCK && spec.dealRows) {
+    return applyDealRow(state);
+  }
+  if (!canMove(state, from, to)) return null;
+
+  const history = pushHistory(state);
+
+  const piles = clonePiles(state.piles);
+  performMove(piles, from, to, specFor(state));
+
+  if (from.pile === PILE.TABLEAU) revealTop(piles, from.index);
+
+  const next = {
+    ...state,
+    piles,
+    history,
+    moves: state.moves + 1,
+    won: isWonPiles(piles, specFor(state).totalCards),
+  };
+  return next;
+}
+
+function canRecycle(state) {
+  const spec = specFor(state);
+  return spec.stock && state.piles.stock.length === 0 && state.piles.waste.length > 0;
+}
+
+function applyRecycle(state) {
+  if (!canRecycle(state)) return null;
+
+  const history = state.history.slice();
+  history.push({
+    piles: clonePiles(state.piles),
+    moves: state.moves,
+    redeals: state.redeals,
+    elapsedMs: state.elapsedMs,
+    won: state.won,
+  });
+  while (history.length > HISTORY_LIMIT) history.shift();
+
+  const piles = clonePiles(state.piles);
+  piles.stock = piles.waste.slice().reverse();
+  piles.waste = [];
+  piles.stock.forEach((card) => {
+    card.faceUp = false;
+  });
+
+  return {
+    ...state,
+    piles,
+    history,
+    moves: state.moves + 1,
+    redeals: state.redeals + 1,
+    won: isWonPiles(piles, specFor(state).totalCards),
+  };
+}
+
+function applyFlip(state, columnIndex) {
+  if (state.variantId === 'klondike') return null;
+  const column = state.piles.tableau[columnIndex];
+  if (!column || !column.length) return null;
+  const card = topOf(column);
+  if (card.faceUp) return null;
+
+  const history = state.history.slice();
+  history.push({
+    piles: clonePiles(state.piles),
+    moves: state.moves,
+    redeals: state.redeals,
+    elapsedMs: state.elapsedMs,
+    won: state.won,
+  });
+  while (history.length > HISTORY_LIMIT) history.shift();
+
+  const piles = clonePiles(state.piles);
+  topOf(piles.tableau[columnIndex]).faceUp = true;
+
+  return { ...state, piles, history, moves: state.moves + 1, won: isWonPiles(piles, specFor(state).totalCards) };
+}
+
+function undo(state) {
+  if (!state.history.length) return null;
+  const history = state.history.slice();
+  const previous = history.pop();
+  return {
+    ...state,
+    piles: previous.piles,
+    history,
+    moves: previous.moves,
+    redeals: previous.redeals,
+    elapsedMs: previous.elapsedMs,
+    won: previous.won,
+  };
+}
+
+function isWonPiles(piles, totalCards = 52) {
+  const total = piles.foundations.reduce((sum, col) => sum + col.length, 0);
+  return total === totalCards;
+}
+
+function isWon(state) {
+  return state.won;
+}
+
+function foundationTargets(state, from) {
+  const targets = [];
+  const run = movableRun(state, from);
+  if (!run) return targets;
+  const spec = specFor(state);
+
+  if (spec.foundationRule === 'run') {
+    if (!isCompleteRun(run, spec.runLength)) return targets;
+    state.piles.foundations.forEach((col, index) => {
+      if (col.length === 0) targets.push({ pile: PILE.FOUNDATION, index });
+    });
+    return targets;
+  }
+
+  if (run.length !== 1) return targets;
+  const card = run[0];
+  state.piles.foundations.forEach((col, index) => {
+    if (canStackOnFoundation(card, col)) targets.push({ pile: PILE.FOUNDATION, index });
+  });
+  return targets;
+}
+
+function findAutoFoundationMove(state, from) {
+  const targets = foundationTargets(state, from);
+  return targets.length ? targets[0] : null;
+}
+
+function findEmptyColumnTarget(state, from) {
+  if (specFor(state).emptyColumn !== 'any') return null;
+  const run = movableRun(state, from);
+  if (!run) return null;
+  const index = state.piles.tableau.findIndex((col) => col.length === 0);
+  if (index < 0) return null;
+  return { pile: PILE.TABLEAU, index };
+}
+
+function allCardsFaceUp(state) {
+  const piles = state.piles;
+  if (piles.stock.length || piles.waste.length) return false;
+  return piles.tableau.every((col) => col.every((card) => card.faceUp));
+}
+
+function autoFinish(state) {
+  if (!allCardsFaceUp(state)) return null;
+  let current = state;
+  let guard = 0;
+  let changed = false;
+
+  while (guard++ < 60) {
+    let moved = false;
+    for (let i = 0; i < current.piles.tableau.length; i++) {
+      const column = current.piles.tableau[i];
+      if (!column.length) continue;
+      const card = topOf(column);
+      const from = { pile: PILE.TABLEAU, index: i, cardIndex: column.length - 1 };
+      const to = findAutoFoundationMove(current, from);
+      if (to) {
+        current = applyMove(current, from, to);
+        moved = true;
+        changed = true;
+        break;
+      }
+    }
+    if (!moved) {
+      for (let i = 0; i < current.piles.freeCells.length; i++) {
+        const cell = current.piles.freeCells[i];
+        if (!cell.length) continue;
+        const from = { pile: PILE.FREECELL, index: i };
+        const to = findAutoFoundationMove(current, from);
+        if (to) {
+          current = applyMove(current, from, to);
+          moved = true;
+          changed = true;
+          break;
+        }
+      }
+    }
+    if (!moved) break;
+  }
+
+  return changed ? current : null;
+}
+
+function analyzePosition(state) {
+  const moves = legalMoves(state);
+  const canDraw = canDealRow(state) || canRecycle(state);
+
+  if (!moves.length && !canDraw) {
+    return {
+      dead: true,
+      certain: true,
+      moves: 0,
+      short: 'This game is over',
+      reason: 'There are no legal moves left, and no way to turn over more cards.',
+    };
+  }
+
+  const spec = specFor(state);
+
+  if (spec.id === 'freecell') {
+    const emptyColumns = state.piles.tableau.filter((col) => col.length === 0).length;
+    const freeCells = state.piles.freeCells.filter((col) => col.length === 0).length;
+    const capacity = (freeCells + 1) * Math.pow(2, emptyColumns);
+    const movableSources = new Set(moves.map((move) => move.from.pile + ':' + move.from.index + ':' + move.from.cardIndex));
+
+    for (let column = 0; column < state.piles.tableau.length; column++) {
+      const cards = state.piles.tableau[column];
+      if (!cards.length) continue;
+      const topKey = PILE.TABLEAU + ':' + column + ':' + (cards.length - 1);
+      const topCanMove = movableSources.has(topKey);
+      if (topCanMove) continue;
+
+      for (let index = 1; index < cards.length; index++) {
+        if (!cards[index].faceUp) continue;
+        const block = cards.length - index;
+        if (block > capacity) {
+          return {
+            dead: true,
+            certain: false,
+            moves: moves.length,
+            short: 'This game cannot be won',
+            reason:
+              'A pile of ' + block + ' cards is too large to shift with ' + freeCells +
+              ' free cells and ' + emptyColumns + ' empty columns, so it can never be broken up.',
+          };
+        }
+      }
+    }
+  }
+
+  if (spec.id === 'klondike') {
+    const canStillDraw = state.piles.stock.length > 0 || state.piles.waste.length > 0;
+    const hasEmptyColumn = state.piles.tableau.some((col) => col.length === 0);
+    const hasKing = state.piles.tableau.some((col) => col.some((card) => card.rank === 13 && card.faceUp));
+    const foundationMove = moves.some((move) => move.to.pile === PILE.FOUNDATION);
+    if (!canStillDraw && !hasEmptyColumn && !hasKing && !foundationMove) {
+      return {
+        dead: true,
+        certain: false,
+        moves: moves.length,
+        short: 'This game cannot be won',
+        reason:
+          'There is no empty column and no King in sight, so no new sequence can ever be started.',
+      };
+    }
+  }
+
+  return { dead: false, certain: false, moves: moves.length, short: '', reason: '' };
+}
+
+function legalMoves(state) {
+  const moves = [];
+  const spec = specFor(state);
+  const sources = [];
+
+  if (spec.stock && state.piles.stock.length) {
+    sources.push({ pile: PILE.STOCK, index: 0, cardIndex: null });
+  }
+  if (spec.dealRows && state.piles.stock.length) {
+    sources.push({ pile: PILE.STOCK, index: 0, cardIndex: null });
+  }
+  if (state.piles.waste.length) {
+    sources.push({ pile: PILE.WASTE, index: 0, cardIndex: null });
+  }
+  state.piles.freeCells.forEach((col, index) => {
+    if (col.length) sources.push({ pile: PILE.FREECELL, index, cardIndex: null });
+  });
+  state.piles.tableau.forEach((col, index) => {
+    for (let i = 0; i < col.length; i++) {
+      if (!col[i].faceUp) continue;
+      sources.push({ pile: PILE.TABLEAU, index, cardIndex: i });
+    }
+  });
+
+  const targets = [];
+  state.piles.foundations.forEach((_, index) => targets.push({ pile: PILE.FOUNDATION, index }));
+  state.piles.freeCells.forEach((_, index) => targets.push({ pile: PILE.FREECELL, index }));
+  state.piles.tableau.forEach((_, index) => targets.push({ pile: PILE.TABLEAU, index }));
+  if (spec.waste) targets.push({ pile: PILE.WASTE, index: 0 });
+
+  for (const from of sources) {
+    for (const to of targets) {
+      if (canMove(state, from, to)) moves.push({ from, to });
+    }
+  }
+  return moves;
+}
+
+function hasLegalMove(state) {
+  return legalMoves(state).length > 0;
+}
+
+function legalTargets(state, from) {
+  const targets = [];
+  if (!from) return targets;
+  const piles = state.piles;
+
+  if (from.pile === PILE.STOCK) {
+    if (piles.stock.length) targets.push({ pile: PILE.WASTE, index: 0 });
+    return targets;
+  }
+
+  piles.foundations.forEach((_, index) => {
+    if (canMove(state, from, { pile: PILE.FOUNDATION, index })) {
+      targets.push({ pile: PILE.FOUNDATION, index });
+    }
+  });
+  piles.freeCells.forEach((_, index) => {
+    if (canMove(state, from, { pile: PILE.FREECELL, index })) {
+      targets.push({ pile: PILE.FREECELL, index });
+    }
+  });
+  piles.tableau.forEach((_, index) => {
+    if (canMove(state, from, { pile: PILE.TABLEAU, index })) {
+      targets.push({ pile: PILE.TABLEAU, index });
+    }
+  });
+
+  return targets;
+}
+
+function findHint(state) {
+  const moves = legalMoves(state);
+
+  const foundation = moves.find((m) => m.to.pile === PILE.FOUNDATION);
+  if (foundation) return { ...foundation, reason: 'Send to a foundation' };
+
+  const freeCell = moves.find((m) => m.to.pile === PILE.FREECELL);
+  if (freeCell) return { ...freeCell, reason: 'Move to a free cell' };
+
+  const waste = moves.find((m) => m.from.pile === PILE.WASTE);
+  if (waste) return { ...waste, reason: 'Move this card from the waste' };
+
+  const tableau = moves.find((m) => m.to.pile === PILE.TABLEAU);
+  if (tableau) return { ...tableau, reason: 'Build down on this pile' };
+
+  return null;
+}
+
+function serialize(state) {
+  return JSON.stringify({
+    variantId: state.variantId,
+    options: state.options,
+    seed: state.seed,
+    piles: state.piles,
+    history: state.history,
+    moves: state.moves,
+    redeals: state.redeals,
+    startedAt: state.startedAt,
+    elapsedMs: state.elapsedMs,
+    won: state.won,
+  });
+}
+
+function deserialize(raw) {
+  try {
+    const data = typeof raw === 'string' ? JSON.parse(raw) : raw;
+    if (!data || !data.variantId || !data.piles) return null;
+    return {
+      variantId: data.variantId,
+      options: normalizeOptions(data.variantId, data.options),
+      seed: data.seed != null ? data.seed >>> 0 : randomSeed(),
+      piles: data.piles,
+      history: Array.isArray(data.history) ? data.history : [],
+      moves: data.moves || 0,
+      redeals: data.redeals || 0,
+      startedAt: data.startedAt || Date.now(),
+      elapsedMs: data.elapsedMs || 0,
+      won: Boolean(data.won),
+    };
+  } catch (error) {
+    return null;
+  }
+}
+
+/* src/layout.js */
+const CARD_ASPECT = 0.714;
+
+function computeLayout(variant, width, height) {
+  const columns = variant.tableauRows.length;
+  const shortSide = Math.min(width, height);
+  const pad = Math.max(10, Math.round(shortSide * 0.014));
+  const gap = Math.max(5, Math.round(width * 0.0065));
+  const topGap = Math.max(12, Math.round(height * 0.03));
+
+  const leftSlots = variant.stock ? (variant.waste ? 2 : 1) : variant.freeCells;
+  const rightSlots = variant.foundations;
+  const topSlots = leftSlots + rightSlots;
+  const separation = variant.freeCells > 0 ? 0.45 : 0;
+
+  const widthForTop = (width - pad * 2 - gap * (topSlots - 1)) / (topSlots + separation);
+  const widthForTableau = (width - pad * 2 - gap * (columns - 1)) / columns;
+
+  let cardW = Math.min(widthForTop, widthForTableau);
+  let cardH = cardW / CARD_ASPECT;
+
+  const availH = height - pad * 2 - topGap;
+  const viableCardH = availH / 2.55;
+  if (cardH > viableCardH) {
+    cardH = viableCardH;
+    cardW = cardH * CARD_ASPECT;
+  }
+
+  const tableY = pad + cardH + topGap;
+  const tableBottom = height - pad;
+
+  const tableauWidth = columns * cardW + (columns - 1) * gap;
+  const tableauStart = Math.max(pad, (width - tableauWidth) / 2);
+
+  const foundations = [];
+  for (let i = 0; i < rightSlots; i++) {
+    const x = width - pad - (rightSlots - i) * cardW - (rightSlots - 1 - i) * gap;
+    foundations.push({ x, y: pad, w: cardW, h: cardH });
+  }
+
+  const foundationsLeft = foundations.length ? foundations[0].x : width;
+  const stock = { x: pad, y: pad, w: cardW, h: cardH };
+  const waste = { x: pad + cardW + gap, y: pad, w: cardW, h: cardH };
+  const freeCells = [];
+  for (let i = 0; i < variant.freeCells; i++) {
+    freeCells.push({ x: pad + i * (cardW + gap), y: pad, w: cardW, h: cardH });
+  }
+
+  const wasteRoom = foundationsLeft - (waste.x + cardW) - gap;
+  const wasteFan = wasteRoom > 12 ? Math.min(cardW * 0.22, wasteRoom / 2) : 0;
+
+  const tableau = [];
+  for (let i = 0; i < columns; i++) {
+    tableau.push({ x: tableauStart + i * (cardW + gap), y: tableY, w: cardW, h: cardH });
+  }
+
+  const estimatedDepth = 13;
+  const fanUp = cardH * 0.30;
+  const fanMin = cardH * 0.11;
+  const fanDown = Math.max(6, cardH * 0.09);
+  const regionH = tableBottom - tableY;
+  const roomPerStep = Math.max(0, regionH - cardH) / (estimatedDepth - 1);
+  const fanUpFitted = Math.max(fanMin, Math.min(fanUp, roomPerStep));
+
+  return {
+    width,
+    height,
+    hasWaste: Boolean(variant.waste),
+    cardW,
+    cardH,
+    pad,
+    gap,
+    topGap,
+    tableY,
+    tableBottom,
+    stock,
+    waste,
+    wasteFan,
+    freeCells,
+    foundations,
+    tableau,
+    fanUp: fanUpFitted,
+    fanMin,
+    fanDown,
+  };
+}
+
+function columnPositions(layout, column, columnIndex) {
+  const count = column.length;
+  const positions = [];
+  if (!count) return positions;
+
+  const baseX = layout.tableau[columnIndex].x;
+  const startY = layout.tableau[columnIndex].y;
+
+  let firstUp = count;
+  for (let i = 0; i < count; i++) {
+    if (column[i].faceUp) {
+      firstUp = i;
+      break;
+    }
+  }
+  const downCount = firstUp;
+  const upCount = count - firstUp;
+
+  let upStep = layout.fanUp;
+  const needed = downCount * layout.fanDown + upCount * upStep + layout.cardH;
+  const available = layout.tableBottom - startY;
+  if (needed > available && upCount > 1) {
+    const room = Math.max(0, available - layout.cardH - downCount * layout.fanDown);
+    upStep = Math.max(layout.fanMin, Math.min(layout.fanUp, room / (upCount - 1)));
+  }
+
+  let y = startY;
+  for (let i = 0; i < count; i++) {
+    positions.push({ x: baseX, y, strip: layout.cardH });
+    y += i < firstUp ? layout.fanDown : upStep;
+  }
+  for (let i = 0; i < count - 1; i++) {
+    positions[i].strip = positions[i + 1].y - positions[i].y;
+  }
+  return positions;
+}
+
+function computePositions(layout, state) {
+  const piles = state.piles;
+  const cards = new Map();
+  const place = (card, pile, index, x, y, column = null, strip = null) => {
+    if (!card) return;
+    cards.set(card.id, { card, pile, index, x, y, column, strip });
+  };
+
+  const stockTop = topOf(piles.stock);
+  if (stockTop) {
+    place(stockTop, PILE.STOCK, piles.stock.length - 1, layout.stock.x, layout.stock.y, null, layout.cardH);
+  }
+
+  const wasteCount = piles.waste.length;
+  const wasteVisible = Math.min(3, wasteCount);
+  for (let i = 0; i < wasteVisible; i++) {
+    const index = wasteCount - wasteVisible + i;
+    const card = piles.waste[index];
+    place(card, PILE.WASTE, index, layout.waste.x + i * layout.wasteFan, layout.waste.y, null, layout.cardH);
+  }
+
+  piles.foundations.forEach((col, index) => {
+    const card = topOf(col);
+    if (card) {
+      place(card, PILE.FOUNDATION, index, layout.foundations[index].x, layout.foundations[index].y, null, layout.cardH);
+    }
+  });
+
+  piles.freeCells.forEach((col, index) => {
+    const card = topOf(col);
+    if (card) {
+      place(card, PILE.FREECELL, index, layout.freeCells[index].x, layout.freeCells[index].y, null, layout.cardH);
+    }
+  });
+
+  piles.tableau.forEach((col, index) => {
+    const positions = columnPositions(layout, col, index);
+    positions.forEach((pos, i) => {
+      place(col[i], PILE.TABLEAU, i, pos.x, pos.y, index, pos.strip);
+    });
+  });
+
+  return cards;
+}
+
+function hitTest(layout, positions, x, y) {
+  const piles = [
+    { pile: PILE.FOUNDATION, index: 0, rects: layout.foundations },
+    { pile: PILE.FREECELL, index: 0, rects: layout.freeCells },
+  ];
+
+  for (const group of piles) {
+    for (let i = 0; i < group.rects.length; i++) {
+      const rect = group.rects[i];
+      if (x >= rect.x && x <= rect.x + rect.w && y >= rect.y && y <= rect.y + rect.h) {
+        return { pile: group.pile, index: i };
+      }
+    }
+  }
+
+  for (let i = 0; i < layout.tableau.length; i++) {
+    const rect = layout.tableau[i];
+    if (x >= rect.x && x <= rect.x + rect.w && y >= rect.y && y <= layout.tableBottom) {
+      return { pile: PILE.TABLEAU, index: i };
+    }
+  }
+
+  if (
+    x >= layout.stock.x && x <= layout.stock.x + layout.stock.w &&
+    y >= layout.stock.y && y <= layout.stock.y + layout.stock.h
+  ) {
+    return { pile: PILE.STOCK, index: 0 };
+  }
+
+  if (layout.hasWaste) {
+    const wasteLeft = layout.waste.x;
+    const wasteRight = layout.waste.x + layout.cardW + 2 * layout.wasteFan;
+    if (
+      x >= wasteLeft && x <= wasteRight &&
+      y >= layout.waste.y && y <= layout.waste.y + layout.waste.h
+    ) {
+      return { pile: PILE.WASTE, index: 0 };
+    }
+  }
+
+  return null;
+}
+
+/* src/render.js */
+function createCardElement(card) {
+  const element = document.createElement('div');
+  element.className = 'card';
+  element.dataset.id = card.id;
+
+  const front = document.createElement('div');
+  front.className = 'card-face card-front' + (isRed(card.suit) ? ' red' : '');
+
+  const topLeft = document.createElement('div');
+  topLeft.className = 'corner corner-tl';
+  const rank = document.createElement('span');
+  rank.className = 'rank';
+  rank.textContent = RANK_LABEL[card.rank];
+  const suit = document.createElement('span');
+  suit.className = 'suit';
+  suit.textContent = SUIT_SYMBOL[card.suit];
+  topLeft.append(rank, suit);
+
+  const pip = document.createElement('div');
+  pip.className = 'pip';
+  pip.textContent = SUIT_SYMBOL[card.suit];
+
+  const bottomRight = document.createElement('div');
+  bottomRight.className = 'corner corner-br';
+  const rank2 = document.createElement('span');
+  rank2.className = 'rank';
+  rank2.textContent = RANK_LABEL[card.rank];
+  const suit2 = document.createElement('span');
+  suit2.className = 'suit';
+  suit2.textContent = SUIT_SYMBOL[card.suit];
+  bottomRight.append(rank2, suit2);
+
+  front.append(topLeft, pip, bottomRight);
+
+  const back = document.createElement('div');
+  back.className = 'card-face card-back';
+
+  element.append(front, back);
+  return element;
+}
+
+class Renderer {
+  constructor(root) {
+    this.root = root;
+    this.cardElements = new Map();
+    this.slotElements = new Map();
+    this.badgeElements = new Map();
+    this.dealTimer = null;
+  }
+
+  dealOrigin(layout, spec) {
+    if (spec.stock) {
+      return { x: layout.stock.x, y: layout.stock.y };
+    }
+    return { x: Math.round((layout.width - layout.cardW) / 2), y: layout.height + 20 };
+  }
+
+  setVariant(variant, layout) {
+    this.root.textContent = '';
+    this.cardElements.clear();
+    this.slotElements.clear();
+    this.badgeElements.clear();
+
+    const foundationSuits = variant.foundationSuits || [];
+
+    const addSlot = (pile, index, extraClass) => {
+      const slot = document.createElement('div');
+      slot.className = 'slot' + (extraClass ? ' ' + extraClass : '');
+      slot.dataset.pile = pile;
+      slot.dataset.index = String(index);
+      const rect = this.rectFor(pile, index, layout);
+      slot.style.left = rect.x + 'px';
+      slot.style.top = rect.y + 'px';
+      slot.style.width = rect.w + 'px';
+      slot.style.height = rect.h + 'px';
+      this.root.appendChild(slot);
+      this.slotElements.set(pile + ':' + index, slot);
+    };
+
+    if (variant.stock) addSlot(PILE.STOCK, 0, 'slot-stock');
+    if (variant.waste) addSlot(PILE.WASTE, 0, 'slot-waste');
+    for (let i = 0; i < variant.freeCells; i++) addSlot(PILE.FREECELL, i);
+    for (let i = 0; i < variant.foundations; i++) {
+      addSlot(PILE.FOUNDATION, i, 'slot-foundation');
+      const slot = this.slotElements.get(PILE.FOUNDATION + ':' + i);
+      const mark = document.createElement('span');
+      mark.className = 'slot-mark';
+      const suit = foundationSuits[i % Math.max(1, foundationSuits.length)];
+      mark.textContent = SUIT_SYMBOL[suit] || '';
+      slot.appendChild(mark);
+    }
+    for (let i = 0; i < variant.tableauRows.length; i++) {
+      addSlot(PILE.TABLEAU, i, 'slot-tableau');
+    }
+  }
+
+  layoutSlots(layout) {
+    this.slotElements.forEach((element, key) => {
+      const separator = key.lastIndexOf(':');
+      const pile = key.slice(0, separator);
+      const index = Number(key.slice(separator + 1));
+      const rect = this.rectFor(pile, index, layout);
+      element.style.left = rect.x + 'px';
+      element.style.top = rect.y + 'px';
+      element.style.width = rect.w + 'px';
+      element.style.height = rect.h + 'px';
+    });
+  }
+
+  rectFor(pile, index, layout) {
+    if (pile === PILE.STOCK) return layout.stock;
+    if (pile === PILE.WASTE) return layout.waste;
+    if (pile === PILE.FREECELL) return layout.freeCells[index];
+    if (pile === PILE.FOUNDATION) return layout.foundations[index];
+    return layout.tableau[index];
+  }
+
+  render(state, layout, view = {}) {
+    const positions = view.positions || computePositions(layout, state);
+    const selection = view.selection || null;
+    const hint = view.hint || null;
+    const targets = view.targets || [];
+
+    this.layoutSlots(layout);
+
+    const targetKeys = new Set(targets.map((target) => target.pile + ':' + target.index));
+    this.slotElements.forEach((element, key) => {
+      element.classList.toggle('is-target', targetKeys.has(key));
+    });
+
+    const live = new Set();
+    positions.forEach((info, id) => live.add(id));
+
+    for (const [id, element] of this.cardElements) {
+      if (!live.has(id)) {
+        element.remove();
+        this.cardElements.delete(id);
+      }
+    }
+
+    const selectedIds = new Set();
+    if (selection && selection.pile === PILE.TABLEAU) {
+      const column = state.piles.tableau[selection.index];
+      for (let i = selection.cardIndex; i < column.length; i++) selectedIds.add(column[i].id);
+    } else if (selection) {
+      const card = this.cardForSelection(state, selection);
+      if (card) selectedIds.add(card.id);
+    }
+
+    const hintIds = new Set();
+    if (hint) {
+      const card = this.cardForSelection(state, hint.from);
+      if (card) hintIds.add(card.id);
+    }
+
+    const deal = Boolean(view.dealAnimation);
+    const origin = deal ? this.dealOrigin(layout, view.spec || { stock: false }) : null;
+
+    positions.forEach((info, id) => {
+      let element = this.cardElements.get(id);
+      if (!element) {
+        element = createCardElement(info.card);
+        this.root.appendChild(element);
+        this.cardElements.set(id, element);
+      }
+
+      element.classList.toggle('is-up', info.card.faceUp);
+      element.classList.toggle('is-selected', selectedIds.has(id));
+      element.classList.toggle('is-hint', hintIds.has(id));
+      element.dataset.pile = info.pile;
+      element.dataset.index = String(info.index);
+      element.dataset.column = info.pile === PILE.TABLEAU ? String(info.column) : '';
+      element.__baseX = info.x;
+      element.__baseY = info.y;
+      element.style.setProperty('--strip', (info.strip || layout.cardH) + 'px');
+      element.style.transform = 'translate3d(' + info.x + 'px,' + info.y + 'px,0)';
+      element.style.zIndex = String(this.zIndex(info));
+    });
+
+    if (deal) this.playDeal(positions, origin, layout);
+
+    this.updateBadges(state, layout);
+  }
+
+  playDeal(positions, origin, layout) {
+    if (this.dealTimer) clearTimeout(this.dealTimer);
+
+    const order = [];
+    positions.forEach((info, id) => {
+      order.push({ id, info });
+    });
+    order.sort((a, b) => (a.info.x || 0) - (b.info.x || 0) || (a.info.y || 0) - (b.info.y || 0));
+
+    order.forEach((entry, index) => {
+      const element = this.cardElements.get(entry.id);
+      if (!element) return;
+      element.style.transitionDelay = index * 22 + 'ms';
+      element.style.transform = 'translate3d(' + origin.x + 'px,' + origin.y + 'px,0)';
+    });
+
+    requestAnimationFrame(() => {
+      order.forEach((entry) => {
+        const element = this.cardElements.get(entry.id);
+        if (!element) return;
+        element.style.transform = 'translate3d(' + entry.info.x + 'px,' + entry.info.y + 'px,0)';
+      });
+    });
+
+    this.dealTimer = setTimeout(() => {
+      this.dealTimer = null;
+      this.cardElements.forEach((element) => {
+        element.style.transitionDelay = '0ms';
+      });
+    }, 1200);
+  }
+
+  cardForSelection(state, selection) {
+    if (!selection) return null;
+    const piles = state.piles;
+    if (selection.pile === PILE.WASTE) {
+      return piles.waste.length ? piles.waste[piles.waste.length - 1] : null;
+    }
+    if (selection.pile === PILE.FREECELL) {
+      const cell = piles.freeCells[selection.index];
+      return cell.length ? cell[cell.length - 1] : null;
+    }
+    if (selection.pile === PILE.FOUNDATION) {
+      const col = piles.foundations[selection.index];
+      return col.length ? col[col.length - 1] : null;
+    }
+    if (selection.pile === PILE.TABLEAU) {
+      const column = piles.tableau[selection.index];
+      return column[selection.cardIndex] || null;
+    }
+    return null;
+  }
+
+  zIndex(info) {
+    if (info.pile === PILE.TABLEAU) return 20 + info.index;
+    if (info.pile === PILE.FOUNDATION) return 10;
+    if (info.pile === PILE.FREECELL) return 10;
+    if (info.pile === PILE.WASTE) return 40 + info.index;
+    return 30;
+  }
+
+  updateBadges(state, layout) {
+    const setBadge = (pile, index, text) => {
+      const key = 'badge-' + pile + ':' + index;
+      let badge = this.badgeElements.get(key);
+      if (!text) {
+        if (badge) {
+          badge.remove();
+          this.badgeElements.delete(key);
+        }
+        return;
+      }
+      if (!badge) {
+        badge = document.createElement('span');
+        badge.className = 'badge';
+        this.root.appendChild(badge);
+        this.badgeElements.set(key, badge);
+      }
+      const rect = this.rectFor(pile, index, layout);
+      badge.textContent = text;
+      badge.style.left = rect.x + rect.w - layout.cardW * 0.34 + 'px';
+      badge.style.top = rect.y + layout.cardH - layout.cardH * 0.34 + 'px';
+      badge.style.zIndex = '200';
+    };
+
+    setBadge(PILE.STOCK, 0, state.piles.stock.length ? String(state.piles.stock.length) : '');
+    setBadge(PILE.WASTE, 0, state.piles.waste.length ? String(state.piles.waste.length) : '');
+  }
+}
+
+/* src/input.js */
+const DRAG_THRESHOLD = 10;
+const DOUBLE_TAP_MS = 320;
+
+function groupFor(state, pile, index, cardIndex) {
+  if (pile === PILE.TABLEAU) {
+    const column = state.piles.tableau[index];
+    const group = [];
+    for (let i = cardIndex; i < column.length; i++) {
+      if (!column[i].faceUp) return null;
+      group.push(column[i]);
+    }
+    return group.length ? group : null;
+  }
+  if (pile === PILE.WASTE) {
+    const card = topOf(state.piles.waste);
+    return card ? [card] : null;
+  }
+  if (pile === PILE.FREECELL) {
+    const card = topOf(state.piles.freeCells[index]);
+    return card ? [card] : null;
+  }
+  return null;
+}
+
+function isWasteTop(state, element) {
+  if (!element) return false;
+  const waste = state.piles.waste;
+  if (!waste.length) return false;
+  return waste[waste.length - 1].id === element.dataset.id;
+}
+
+class InputController {
+  constructor(root, context) {
+    this.root = root;
+    this.context = context;
+    this.pending = null;
+    this.drag = null;
+    this.lastTap = null;
+
+    this.onPointerDown = this.onPointerDown.bind(this);
+    this.onPointerMove = this.onPointerMove.bind(this);
+    this.onPointerUp = this.onPointerUp.bind(this);
+    this.onPointerCancel = this.onPointerCancel.bind(this);
+
+    root.addEventListener('pointerdown', this.onPointerDown);
+    root.addEventListener('pointermove', this.onPointerMove);
+    root.addEventListener('pointerup', this.onPointerUp);
+    root.addEventListener('pointercancel', this.onPointerCancel);
+    root.addEventListener('contextmenu', (event) => event.preventDefault());
+  }
+
+  localPoint(event) {
+    const rect = this.root.getBoundingClientRect();
+    return {
+      x: event.clientX - rect.left,
+      y: event.clientY - rect.top,
+    };
+  }
+
+  onPointerDown(event) {
+    if (event.pointerType === 'mouse' && event.button !== 0) return;
+    const element = event.target.closest('.card');
+    const point = this.localPoint(event);
+
+    this.pending = {
+      pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
+      element,
+      pile: element ? element.dataset.pile : null,
+      index: element ? Number(element.dataset.index) : null,
+      column: element && element.dataset.column ? Number(element.dataset.column) : null,
+      moved: false,
+      point,
+    };
+
+    if (element) event.preventDefault();
+  }
+
+  onPointerMove(event) {
+    const pending = this.pending;
+    if (!pending || pending.pointerId !== event.pointerId) return;
+
+    const dx = event.clientX - pending.startX;
+    const dy = event.clientY - pending.startY;
+    if (!pending.moved && Math.hypot(dx, dy) < DRAG_THRESHOLD) return;
+
+    if (!pending.moved) {
+      const started = this.startDrag(pending);
+      if (!started) {
+        pending.moved = true;
+        return;
+      }
+    }
+
+    if (this.drag) {
+      const point = this.localPoint(event);
+      this.drag.dx = point.x - this.drag.origin.x;
+      this.drag.dy = point.y - this.drag.origin.y;
+      this.applyDrag();
+    }
+  }
+
+  startDrag(pending) {
+    const state = this.context.state();
+    const { pile, index, column } = pending;
+    if (!pile || pile === PILE.STOCK) return false;
+    if (pile === PILE.WASTE && !isWasteTop(state, pending.element)) return false;
+
+    const cardIndex = pile === PILE.TABLEAU ? index : null;
+    const group = groupFor(state, pile, column, cardIndex);
+    if (!group) return false;
+
+    const origin = pending.point;
+    const elements = group.map((card) => this.context.renderer.cardElements.get(card.id)).filter(Boolean);
+    if (!elements.length) return false;
+
+    this.drag = {
+      pointerId: pending.pointerId,
+      pile,
+      index: pile === PILE.TABLEAU ? column : index,
+      cardIndex,
+      group,
+      elements,
+      origin,
+      dx: 0,
+      dy: 0,
+      bases: elements.map((element) => ({ x: element.__baseX, y: element.__baseY })),
+    };
+
+    elements.forEach((element) => {
+      element.classList.add('is-dragging');
+      element.style.zIndex = '9000';
+    });
+
+    if (this.root.setPointerCapture) {
+      try {
+        this.root.setPointerCapture(pending.pointerId);
+      } catch (error) {
+        void error;
+      }
+    }
+    return true;
+  }
+
+  applyDrag() {
+    const drag = this.drag;
+    drag.elements.forEach((element, i) => {
+      const base = drag.bases[i];
+      if (!base) return;
+      element.style.transform =
+        'translate3d(' + (base.x + drag.dx) + 'px,' + (base.y + drag.dy) + 'px,0)';
+    });
+  }
+
+  onPointerUp(event) {
+    const pending = this.pending;
+    this.pending = null;
+    if (!pending || pending.pointerId !== event.pointerId) return;
+
+    if (this.drag) {
+      const point = this.localPoint(event);
+      const drag = this.drag;
+      this.drag = null;
+      drag.elements.forEach((element) => element.classList.remove('is-dragging'));
+
+      const layout = this.context.layout();
+      const positions = this.context.positions();
+      const target = hitTest(layout, positions, point.x, point.y);
+      const from = { pile: drag.pile, index: drag.index, cardIndex: drag.cardIndex };
+
+      if (target && this.context.tryMove(from, target)) {
+        this.context.render();
+      } else {
+        this.context.render();
+      }
+      return;
+    }
+
+    this.handleTap(pending);
+  }
+
+  onPointerCancel(event) {
+    const pending = this.pending;
+    this.pending = null;
+    if (!pending || pending.pointerId !== event.pointerId) return;
+    if (this.drag) {
+      this.drag.elements.forEach((element) => element.classList.remove('is-dragging'));
+      this.drag = null;
+      this.context.render();
+    }
+  }
+
+  handleTap(pending) {
+    const state = this.context.state();
+    const selection = this.context.selection();
+    const now = Date.now();
+
+    if (!pending.element) {
+      const target = this.context.slotAt(pending.point.x, pending.point.y);
+      if (target && target.pile === PILE.STOCK) {
+        this.context.onStockTap();
+        return;
+      }
+      if (target && selection) {
+        if (this.context.tryMove(selection, target)) this.context.render();
+        return;
+      }
+      this.context.select(null);
+      this.context.render();
+      return;
+    }
+
+    const pile = pending.pile;
+    const index = pending.index;
+    const column = pending.column;
+    const element = pending.element;
+
+    if (pile === PILE.STOCK) {
+      this.context.onStockTap();
+      return;
+    }
+
+    if (pile === PILE.WASTE && !isWasteTop(state, element)) return;
+
+    const cardId = element.dataset.id;
+    const isDoubleTap = this.lastTap && this.lastTap.id === cardId && now - this.lastTap.time < DOUBLE_TAP_MS;
+    this.lastTap = isDoubleTap ? null : { id: cardId, time: now };
+
+    if (isDoubleTap) {
+      const from = this.sourceFrom(state, pile, column, index);
+      if (from) this.context.autoMove(from);
+      this.context.render();
+      return;
+    }
+
+    if (selection && !this.sameSource(selection, pile, column)) {
+      const target = { pile, index: pile === PILE.TABLEAU || pile === PILE.FREECELL || pile === PILE.FOUNDATION ? index : 0 };
+      if (this.context.tryMove(selection, target)) {
+        this.context.render();
+        return;
+      }
+    }
+
+    const from = this.sourceFrom(state, pile, column, index);
+    if (!from) {
+      this.context.select(null);
+      this.context.render();
+      return;
+    }
+
+    if (from.pile === PILE.TABLEAU) {
+      const tableauColumn = state.piles.tableau[from.index];
+      const card = tableauColumn[from.cardIndex];
+      if (!card.faceUp) {
+        if (from.cardIndex === tableauColumn.length - 1) {
+          this.context.onFlip(from.index);
+        } else {
+          this.context.select(null);
+        }
+        this.context.render();
+        return;
+      }
+    }
+
+    const current = this.context.selection();
+    if (current && this.sameSource(current, pile, column)) {
+      this.context.select(null);
+      this.context.render();
+      return;
+    }
+
+    this.context.select(from);
+    this.context.render();
+  }
+
+  sameSource(selection, pile, column) {
+    if (!selection) return false;
+    if (selection.pile !== pile) return false;
+    if (pile === PILE.TABLEAU) return selection.index === column;
+    return true;
+  }
+
+  sourceFrom(state, pile, column, index) {
+    if (pile === PILE.TABLEAU) {
+      const tableauColumn = state.piles.tableau[column];
+      if (!tableauColumn || !tableauColumn.length) return null;
+      return { pile, index: column, cardIndex: index };
+    }
+    if (pile === PILE.WASTE) {
+      if (!state.piles.waste.length) return null;
+      return { pile, index: 0, cardIndex: null };
+    }
+    if (pile === PILE.FREECELL) {
+      if (!state.piles.freeCells[index].length) return null;
+      return { pile, index, cardIndex: null };
+    }
+    if (pile === PILE.FOUNDATION) {
+      return { pile, index, cardIndex: null };
+    }
+    return null;
+  }
+}
+
+/* src/persist.js */
+const DB_NAME = 'solitaire';
+const DB_VERSION = 1;
+const STORE_SAVE = 'save';
+const STORE_STATS = 'stats';
+const LS_SAVE = 'solitaire.save';
+const LS_STATS = 'solitaire.stats';
+
+let dbPromise = null;
+
+function openDb() {
+  if (dbPromise) return dbPromise;
+  dbPromise = new Promise((resolve, reject) => {
+    if (typeof indexedDB === 'undefined') {
+      reject(new Error('IndexedDB unavailable'));
+      return;
+    }
+    const request = indexedDB.open(DB_NAME, DB_VERSION);
+    request.onupgradeneeded = () => {
+      const db = request.result;
+      if (!db.objectStoreNames.contains(STORE_SAVE)) db.createObjectStore(STORE_SAVE);
+      if (!db.objectStoreNames.contains(STORE_STATS)) db.createObjectStore(STORE_STATS);
+    };
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
+  return dbPromise;
+}
+
+async function withStore(storeName, mode, action) {
+  const db = await openDb();
+  return new Promise((resolve, reject) => {
+    const transaction = db.transaction(storeName, mode);
+    const store = transaction.objectStore(storeName);
+    let result;
+    try {
+      result = action(store);
+    } catch (error) {
+      reject(error);
+      return;
+    }
+    transaction.oncomplete = () => resolve(result && result.result !== undefined ? result.result : result);
+    transaction.onerror = () => reject(transaction.error);
+    transaction.onabort = () => reject(transaction.error);
+  });
+}
+
+function withTimeout(promise, ms) {
+  return Promise.race([
+    promise,
+    new Promise((_, reject) => setTimeout(() => reject(new Error('storage timeout')), ms)),
+  ]);
+}
+
+function localGet(key) {
+  try {
+    const value = localStorage.getItem(key);
+    return value ? JSON.parse(value) : null;
+  } catch (error) {
+    void error;
+    return null;
+  }
+}
+
+function localSet(key, value) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+    return true;
+  } catch (error) {
+    void error;
+    return false;
+  }
+}
+
+function localRemove(key) {
+  try {
+    localStorage.removeItem(key);
+  } catch (error) {
+    void error;
+  }
+}
+
+async function saveGame(state) {
+  const payload = JSON.stringify(state);
+  try {
+    await withTimeout(withStore(STORE_SAVE, 'readwrite', (store) => store.put(payload, 'current')), 2000);
+    return true;
+  } catch (error) {
+    void error;
+    return localSet(LS_SAVE, payload);
+  }
+}
+
+async function loadGame() {
+  try {
+    const value = await withTimeout(
+      withStore(STORE_SAVE, 'readonly', (store) => store.get('current')),
+      2000
+    );
+    if (value) return value;
+  } catch (error) {
+    void error;
+  }
+  return localGet(LS_SAVE);
+}
+
+async function clearGame() {
+  try {
+    await withStore(STORE_SAVE, 'readwrite', (store) => store.delete('current'));
+  } catch (error) {
+    void error;
+  }
+  localRemove(LS_SAVE);
+}
+
+function emptyStats() {
+  return {};
+}
+
+function newVariantStats() {
+  return {
+    played: 0,
+    won: 0,
+    streak: 0,
+    bestStreak: 0,
+    fastestWinMs: null,
+    lastPlayedAt: null,
+    days: {},
+  };
+}
+
+function migrateKey(key) {
+  if (key === 'klondike') return 'klondike:draw1';
+  if (key === 'freecell') return 'freecell:4:4';
+  if (key === 'spider') return 'spider:1';
+  if (key === 'freecell:1') return 'freecell:1:4';
+  if (key === 'freecell:2') return 'freecell:2:4';
+  if (key === 'freecell:4') return 'freecell:4:4';
+  return key;
+}
+
+async function loadStats() {
+  let stats = null;
+  try {
+    stats = await withTimeout(withStore(STORE_STATS, 'readonly', (store) => store.get('all')), 2000);
+  } catch (error) {
+    void error;
+  }
+  if (!stats) stats = localGet(LS_STATS);
+  if (!stats) return emptyStats();
+
+  const merged = emptyStats();
+  Object.keys(stats).forEach((key) => {
+    const target = migrateKey(key);
+    if (merged[target]) {
+      const existing = merged[target];
+      const incoming = stats[key];
+      existing.played += incoming.played || 0;
+      existing.won += incoming.won || 0;
+      existing.bestStreak = Math.max(existing.bestStreak, incoming.bestStreak || 0);
+      if (existing.fastestWinMs == null || (incoming.fastestWinMs != null && incoming.fastestWinMs < existing.fastestWinMs)) {
+        existing.fastestWinMs = incoming.fastestWinMs == null ? existing.fastestWinMs : incoming.fastestWinMs;
+      }
+      Object.keys(incoming.days || {}).forEach((day) => {
+        const current = existing.days[day] || { played: 0, won: 0 };
+        const added = incoming.days[day];
+        const played = typeof added === 'number' ? added : added.played || 0;
+        const won = typeof added === 'number' ? 0 : added.won || 0;
+        existing.days[day] = { played: current.played + played, won: current.won + won };
+      });
+      return;
+    }
+    merged[target] = Object.assign(newVariantStats(), stats[key]);
+  });
+  return merged;
+}
+
+async function persistStats(stats) {
+  try {
+    await withTimeout(withStore(STORE_STATS, 'readwrite', (store) => store.put(stats, 'all')), 2000);
+    return;
+  } catch (error) {
+    void error;
+  }
+  localSet(LS_STATS, stats);
+}
+
+async function recordDeal(key) {
+  const stats = await loadStats();
+  const entry = stats[key] || (stats[key] = newVariantStats());
+  entry.played += 1;
+  entry.lastPlayedAt = Date.now();
+  const day = todayKey();
+  const bucket = entry.days[day] || { played: 0, won: 0 };
+  bucket.played += 1;
+  entry.days[day] = bucket;
+  await persistStats(stats);
+  return stats;
+}
+
+async function recordResult(key, won, elapsedMs) {
+  const stats = await loadStats();
+  const entry = stats[key] || (stats[key] = newVariantStats());
+  if (won) {
+    entry.won += 1;
+    entry.streak += 1;
+    entry.bestStreak = Math.max(entry.bestStreak, entry.streak);
+    if (entry.fastestWinMs == null || elapsedMs < entry.fastestWinMs) entry.fastestWinMs = elapsedMs;
+    const day = todayKey();
+    const bucket = entry.days[day] || { played: 0, won: 0 };
+    bucket.won += 1;
+    entry.days[day] = bucket;
+  } else {
+    entry.streak = 0;
+  }
+  await persistStats(stats);
+  return stats;
+}
+
+async function clearStats() {
+  const stats = emptyStats();
+  await persistStats(stats);
+  return stats;
+}
+
+function todayKey(date = new Date()) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return year + '-' + month + '-' + day;
+}
+
+/* src/rules.js */
+const HOW_TO_PLAY = [
+  {
+    title: 'Tap to select, tap to place',
+    text: 'Tap a card to pick it up, then tap the pile you want it on. Tap the same card again to put it down.',
+  },
+  {
+    title: 'Drag it instead',
+    text: 'Press and hold a card, then drag it anywhere on the board. A legal drop lands, an illegal one snaps back.',
+  },
+  {
+    title: 'Double tap to send home',
+    text: 'Double tap a card to send it straight to a foundation. Double tap again if it has nowhere to go.',
+  },
+  {
+    title: 'Undo is unlimited',
+    text: 'Undo takes back any number of moves, including a deal from the stock. The Hint button shows a legal move.',
+  },
+  {
+    title: 'Your game is saved',
+    text: 'Every move is saved automatically, so you can close the app and come back to the same board.',
+  },
+];
+
+const RULES = {
+  klondike: {
+    summary: 'Seven tableau piles, four foundations, a stock and a waste. The hardest of the three to win.',
+    points: [
+      'Build tableau piles downwards in alternating colours, so a red 7 sits on a black 8.',
+      'Foundations are built up in a single suit from Ace to King.',
+      'Only a King may be moved onto an empty column.',
+      'The stock is turned one card at a time, or three if you switch the draw setting. When the stock runs out the waste is picked up and turned back over.',
+      'You win when all 52 cards are on the foundations.',
+    ],
+  },
+  freecell: {
+    summary: 'Eight tableau piles, free cells, four foundations. Almost every deal can be won.',
+    points: [
+      'Build tableau piles downwards in alternating colours, the same as Klondike.',
+      'Each free cell holds one card and is the key to moving long sequences.',
+      'A sequence can be moved to an empty column if it can be split apart and rebuilt through the free cells.',
+      'The fewer free cells you use, the further you can move a sequence at once.',
+      'You win when all 52 cards are on the foundations.',
+    ],
+  },
+  spider: {
+    summary: 'Ten tableau piles, eight foundations and a stock of fifty cards. Two decks of a single suit.',
+    points: [
+      'Build tableau piles downwards, and cards must be the same suit.',
+      'Any card may be moved onto an empty column.',
+      'A complete run of thirteen cards, King down to Ace in one suit, moves itself to a foundation.',
+      'Every card in the tableau must be the same suit as the one it sits on.',
+      'Tapping the stock deals one card onto every column, face up, five rounds in total.',
+      'You win when all 104 cards are on the foundations.',
+    ],
+  },
+  spiderette: {
+    summary: 'Spider with a single deck and no stock. A gentler way into the Spider idea.',
+    points: [
+      'Build tableau piles downwards, and cards must be the same suit.',
+      'Any card may be moved onto an empty column.',
+      'A complete run of thirteen cards, King down to Ace in one suit, moves itself to a foundation.',
+      'There is no stock, so every card is dealt from the start.',
+      'You win when all 52 cards are on the foundations.',
+    ],
+  },
+  fortyThieves: {
+    summary: 'Forty cards from a single deck, without the eights, tens or kings. Everything is face up.',
+    points: [
+      'Ten columns of four cards are dealt, all of them face up.',
+      'Build tableau piles downwards in the same suit, never in alternate colours.',
+      'Any card may be moved onto an empty column.',
+      'The foundations are built up in suit from Ace to Ten.',
+      'You win when all 40 cards are on the foundations.',
+    ],
+  },
+  yukon: {
+    summary: 'Seven long columns, no stock, and groups move whether they are in order or not.',
+    points: [
+      'The columns hold 1, 6, 7, 8, 9, 10 and 11 cards, with the top five of each column face up.',
+      'Build tableau piles downwards in alternating colours.',
+      'You may pick up any face up card along with the cards on top of it, even if they are not in order.',
+      'Only a King may be moved onto an empty column.',
+      'You win when all 52 cards are on the foundations.',
+    ],
+  },
+};
+
+const SUIT_RULES = {
+  4: 'One standard deck of all four suits.',
+  2: 'Two copies each of spades and hearts, so every rank appears twice.',
+  1: 'Four copies of a single suit, so every rank appears four times.',
+};
+
+const DRAW_RULES = {
+  1: 'The stock is turned over one card at a time.',
+  3: 'The stock is turned over three cards at a time, and only the top card of the waste can be played.',
+};
+
+/* src/stats.js */
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+function dayEntry(value) {
+  if (typeof value === 'number') return { played: value, won: 0 };
+  if (!value) return { played: 0, won: 0 };
+  return { played: value.played || 0, won: value.won || 0 };
+}
+
+function todayKey(date = new Date()) {
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, '0');
+  const day = String(date.getDate()).padStart(2, '0');
+  return year + '-' + month + '-' + day;
+}
+
+function mondayOf(date) {
+  const copy = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+  const day = copy.getDay() || 7;
+  copy.setDate(copy.getDate() - day + 1);
+  return copy;
+}
+
+function lastWeeks(count, days) {
+  const buckets = new Map();
+  const start = mondayOf(new Date());
+  start.setDate(start.getDate() - 7 * (count - 1));
+
+  for (let i = 0; i < count; i++) {
+    const monday = new Date(start);
+    monday.setDate(start.getDate() + 7 * i);
+    buckets.set(todayKey(monday), { played: 0, won: 0, label: monday.getDate() + ' ' + MONTHS[monday.getMonth()] });
+  }
+
+  Object.keys(days || {}).forEach((key) => {
+    const parts = key.split('-');
+    const date = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
+    const bucket = buckets.get(todayKey(mondayOf(date)));
+    if (!bucket) return;
+    const entry = dayEntry(days[key]);
+    bucket.played += entry.played;
+    bucket.won += entry.won;
+  });
+
+  return Array.from(buckets.values());
+}
+
+function lastMonths(count, days) {
+  const buckets = new Map();
+  const now = new Date();
+
+  for (let i = count - 1; i >= 0; i--) {
+    const date = new Date(now.getFullYear(), now.getMonth() - i, 1);
+    const key = date.getFullYear() + '-' + String(date.getMonth() + 1).padStart(2, '0');
+    buckets.set(key, { played: 0, won: 0, label: MONTHS[date.getMonth()] + " '" + String(date.getFullYear()).slice(2) });
+  }
+
+  Object.keys(days || {}).forEach((key) => {
+    const bucket = buckets.get(key.slice(0, 7));
+    if (!bucket) return;
+    const entry = dayEntry(days[key]);
+    bucket.played += entry.played;
+    bucket.won += entry.won;
+  });
+
+  return Array.from(buckets.values());
+}
+
+function lastYears(count, days) {
+  const buckets = new Map();
+  const now = new Date().getFullYear();
+
+  for (let i = count - 1; i >= 0; i--) {
+    const year = now - i;
+    buckets.set(String(year), { played: 0, won: 0, label: String(year) });
+  }
+
+  Object.keys(days || {}).forEach((key) => {
+    const bucket = buckets.get(key.slice(0, 4));
+    if (!bucket) return;
+    const entry = dayEntry(days[key]);
+    bucket.played += entry.played;
+    bucket.won += entry.won;
+  });
+
+  return Array.from(buckets.values());
+}
+
+function longestStreak(days) {
+  const keys = Object.keys(days || {}).sort();
+  let best = 0;
+  let run = 0;
+  let previous = null;
+
+  keys.forEach((key) => {
+    const entry = dayEntry(days[key]);
+    if (!entry.played) {
+      run = 0;
+      previous = key;
+      return;
+    }
+    if (previous) {
+      const gap = (new Date(key) - new Date(previous)) / 86400000;
+      run = gap === 1 ? run + 1 : 1;
+    } else {
+      run = 1;
+    }
+    best = Math.max(best, run);
+    previous = key;
+  });
+
+  return best;
+}
+
+function busiestDay(days) {
+  let best = null;
+  let bestCount = 0;
+  Object.keys(days || {}).forEach((key) => {
+    const entry = dayEntry(days[key]);
+    if (entry.played > bestCount) {
+      bestCount = entry.played;
+      best = key;
+    }
+  });
+  return best ? { key: best, count: bestCount } : null;
+}
+
+/* src/deals.js */
+function dailySeed(date = new Date()) {
+  const value = date.getFullYear() * 10000 + (date.getMonth() + 1) * 100 + date.getDate();
+  return value >>> 0;
+}
+
+function encodeOptions(options) {
+  return Object.keys(options || {})
+    .sort()
+    .map((key) => key + ':' + options[key])
+    .join('-');
+}
+
+function decodeOptions(code) {
+  const options = {};
+  if (!code) return options;
+  code.split('-').forEach((pair) => {
+    const [key, value] = pair.split(':');
+    if (!key) return;
+    options[key] = /^[0-9]+$/.test(value) ? Number(value) : value;
+  });
+  return options;
+}
+
+function dealCode(state) {
+  return [state.variantId, (state.seed >>> 0).toString(36), encodeOptions(state.options)].join('.');
+}
+
+function decodeDeal(code) {
+  const parts = String(code || '').split('.');
+  if (!parts[0] || !parts[1]) return null;
+  const seed = parseInt(parts[1], 36);
+  if (Number.isNaN(seed)) return null;
+  return { variantId: parts[0], seed: seed >>> 0, options: decodeOptions(parts[2]) };
+}
+
+/* src/main.js */
+const tableEl = document.getElementById('table');
+const hudTimer = document.getElementById('timer');
+const hudMoves = document.getElementById('moves');
+const hudVariant = document.getElementById('variant-name');
+const hudBanner = document.getElementById('banner');
+const overlay = document.getElementById('overlay');
+const overlayBody = document.getElementById('overlay-body');
+const panel = document.getElementById('panel');
+const statsBody = document.getElementById('stats-body');
+const variantTabs = document.getElementById('variant-tabs');
+const optionTabs = document.getElementById('option-tabs');
+const splash = document.getElementById('splash');
+const dealBody = document.getElementById('deal-body');
+const shareField = document.getElementById('share-field');
+const winCards = document.getElementById('win-cards');
+const howtoBody = document.getElementById('howto-body');
+const rulesBody = document.getElementById('rules-body');
+const toast = document.getElementById('toast');
+const confirmDialog = document.getElementById('confirm');
+const confirmDetail = document.getElementById('confirm-detail');
+const giveUpButton = document.getElementById('btn-giveup');
+
+const renderer = new Renderer(tableEl);
+
+let state = null;
+let selection = null;
+let hint = null;
+let layout = null;
+let positions = null;
+let elapsedBase = 0;
+let sessionStart = Date.now();
+let timerId = null;
+let stats = null;
+let finished = false;
+let saveTimer = null;
+let hintTimer = null;
+let dealAnimation = false;
+let toastTimer = null;
+let position = { dead: false, certain: false, moves: 0, short: '', reason: '' };
+
+function spec() {
+  return getSpec(state.variantId, state.options);
+}
+
+
+function dealUrl(state) {
+  const base = location.href.split('#')[0];
+  return base + '#d=' + dealCode(state);
+}
+
+function statsKey() {
+  const settings = state.options || {};
+  if (state.variantId === 'klondike') {
+    return settings.drawCount === 3 ? 'klondike:draw3' : 'klondike:draw1';
+  }
+  if (state.variantId === 'spider') {
+    return 'spider:' + settings.suits;
+  }
+  if (state.variantId === 'freecell') {
+    return 'freecell:' + settings.suits + ':' + settings.cells;
+  }
+  return state.variantId;
+}
+
+function optionGroups() {
+  if (state.variantId === 'klondike') {
+    return [
+      {
+        choices: [
+          { value: 1, label: 'Draw 1', options: { drawCount: 1 } },
+          { value: 3, label: 'Draw 3', options: { drawCount: 3 } },
+        ],
+      },
+    ];
+  }
+  if (state.variantId === 'spider') {
+    return [
+      {
+        choices: [
+          { value: 1, label: '1 suit', options: { suits: 1 } },
+          { value: 2, label: '2 suits', options: { suits: 2 } },
+          { value: 4, label: '4 suits', options: { suits: 4 } },
+        ],
+      },
+    ];
+  }
+  if (state.variantId === 'spiderette' || state.variantId === 'fortyThieves' || state.variantId === 'yukon') {
+    return [];
+  }
+  return [
+    {
+      choices: [
+        { value: 4, label: '4 suits', options: { suits: 4 } },
+        { value: 2, label: '2 suits', options: { suits: 2 } },
+        { value: 1, label: '1 suit', options: { suits: 1 } },
+      ],
+    },
+    {
+      choices: [
+        { value: 4, label: '4 cells', options: { cells: 4 } },
+        { value: 6, label: '6 cells', options: { cells: 6 } },
+      ],
+    },
+  ];
+}
+
+function currentElapsed() {
+  if (finished) return elapsedBase;
+  return elapsedBase + (Date.now() - sessionStart);
+}
+
+function measure() {
+  const rect = tableEl.parentElement.getBoundingClientRect();
+  return {
+    width: Math.max(320, Math.floor(rect.width)),
+    height: Math.max(320, Math.floor(rect.height)),
+  };
+}
+
+function refreshLayout() {
+  const size = measure();
+  layout = computeLayout(spec(), size.width, size.height);
+  tableEl.style.setProperty('--cw', layout.cardW + 'px');
+  tableEl.style.setProperty('--ch', layout.cardH + 'px');
+}
+
+function render() {
+  if (!state) return;
+  refreshPosition();
+  refreshLayout();
+  positions = computePositions(layout, state);
+  renderer.render(state, layout, {
+    selection,
+    hint,
+    positions,
+    targets: selection ? legalTargets(state, selection) : [],
+    dealAnimation,
+    spec: spec(),
+  });
+  dealAnimation = false;
+  updateVariantTabs();
+  updateOptionTabs();
+  updateHud();
+}
+
+function updateHud() {
+  const seconds = Math.floor(currentElapsed() / 1000);
+  const minutes = Math.floor(seconds / 60);
+  hudTimer.textContent = minutes + ':' + String(seconds % 60).padStart(2, '0');
+  hudMoves.textContent = state.moves + (state.moves === 1 ? ' move' : ' moves');
+  hudVariant.textContent = spec().name;
+
+  const message = position.dead
+    ? position.short || position.reason
+    : !finished && !state.won && position.moves === 0
+      ? spec().dealRows && state.piles.stock.length
+        ? 'No legal moves - tap the stock to deal'
+        : 'No legal moves left'
+      : '';
+  hudBanner.textContent = message;
+  hudBanner.classList.toggle('visible', Boolean(message));
+  hudBanner.classList.toggle('dead', position.dead);
+  hudBanner.title = position.dead ? position.reason : '';
+  giveUpButton.classList.toggle('alert', position.dead);
+}
+
+function scheduleSave() {
+  if (saveTimer) clearTimeout(saveTimer);
+  saveTimer = setTimeout(() => {
+    saveTimer = null;
+    saveGame(snapshot());
+  }, 400);
+}
+
+function snapshot() {
+  if (!state) return null;
+  return {
+    variantId: state.variantId,
+    options: state.options,
+    piles: state.piles,
+    history: state.history,
+    moves: state.moves,
+    redeals: state.redeals,
+    startedAt: Date.now(),
+    elapsedMs: currentElapsed(),
+    won: state.won,
+  };
+}
+
+function refreshPosition() {
+  if (!state || finished || state.won) {
+    position = { dead: false, certain: false, moves: 0, short: '', reason: '' };
+    return;
+  }
+  position = analyzePosition(state);
+}
+
+function onStateChanged() {
+  if (state.won && !finished) {
+    finished = true;
+    elapsedBase = currentElapsed();
+    stopTimer();
+    recordResult(statsKey(), true, elapsedBase).then((next) => {
+      stats = next;
+      renderStats();
+    });
+    showWin();
+  }
+  render();
+  scheduleSave();
+}
+
+function tryMove(from, to) {
+  if (!state || !from || !to) return false;
+  const next = applyMove(state, from, to);
+  if (!next) return false;
+  state = next;
+  selection = null;
+  hint = null;
+  onStateChanged();
+  maybeAutoFinish();
+  maybeCompleteRun();
+  return true;
+}
+
+function maybeCompleteRun() {
+  if (finished || state.won) return;
+  const completed = autoCompleteRun(state);
+  if (completed) {
+    state = completed;
+    onStateChanged();
+  }
+}
+
+function maybeAutoFinish() {
+  if (finished || state.won) return;
+  if (!allCardsFaceUp(state)) return;
+  const completed = autoFinish(state);
+  if (completed) {
+    state = completed;
+    onStateChanged();
+  }
+}
+
+function onStockTap() {
+  if (spec().dealRows) {
+    const dealt = applyDealRow(state);
+    if (dealt) {
+      state = dealt;
+      selection = null;
+      hint = null;
+      onStateChanged();
+      maybeCompleteRun();
+    }
+    return;
+  }
+  if (state.piles.stock.length) {
+    tryMove({ pile: PILE.STOCK, index: 0 }, { pile: PILE.WASTE, index: 0 });
+    return;
+  }
+  const next = applyRecycle(state);
+  if (next) {
+    state = next;
+    selection = null;
+    hint = null;
+    onStateChanged();
+  }
+}
+
+function onFlip(columnIndex) {
+  const next = applyFlip(state, columnIndex);
+  if (!next) return;
+  state = next;
+  selection = null;
+  onStateChanged();
+}
+
+function autoMove(from) {
+  const foundation = findAutoFoundationMove(state, from);
+  if (foundation) return tryMove(from, foundation);
+  const emptyColumn = findEmptyColumnTarget(state, from);
+  if (emptyColumn) return tryMove(from, emptyColumn);
+  return false;
+}
+
+function showToast(message) {
+  toast.textContent = message;
+  toast.classList.add('visible');
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => {
+    toast.classList.remove('visible');
+    toastTimer = null;
+  }, 2600);
+}
+
+function showHint() {
+  const found = findHint(state);
+  if (!found) {
+    hint = null;
+    render();
+    showToast('No legal moves available');
+    return;
+  }
+  hint = found;
+  render();
+  showToast(found.reason);
+  if (hintTimer) clearTimeout(hintTimer);
+  hintTimer = setTimeout(() => {
+    hint = null;
+    hintTimer = null;
+    render();
+  }, 2400);
+}
+
+function doUndo() {
+  const next = undo(state);
+  if (!next) return;
+  state = next;
+  selection = null;
+  hint = null;
+  finished = state.won;
+  elapsedBase = state.elapsedMs;
+  sessionStart = Date.now();
+  if (finished) stopTimer();
+  render();
+  scheduleSave();
+}
+
+async function newGame(variantId, options) {
+  const id = variantId || state.variantId;
+  const seed = options && options.seed != null ? options.seed : null;
+  const settings = normalizeOptions(id, options || state.options);
+  state = createGame(id, seed == null ? settings : Object.assign({}, settings, { seed }));
+  selection = null;
+  hint = null;
+  finished = false;
+  elapsedBase = 0;
+  sessionStart = Date.now();
+
+  refreshLayout();
+  renderer.setVariant(spec(), layout);
+  dealAnimation = true;
+  render();
+
+  await recordDeal(statsKey());
+  stats = await loadStats();
+  renderStats();
+
+  renderDeal();
+  renderHowTo();
+  renderRules();
+  scheduleSave();
+  startTimer();
+}
+
+function renderDeal() {
+  const seed = state.seed >>> 0;
+  const isDaily = seed === dailySeed();
+  dealBody.innerHTML =
+    '<p><strong>' + spec().name + '</strong> deal ' + seed.toString(36) + '</p>' +
+    '<p>' + (isDaily
+      ? 'This is the daily deal, the same for everyone playing today.'
+      : 'Every game has a code, so you can play this exact deal again or send it to someone.') + '</p>';
+  shareField.hidden = true;
+  shareField.value = '';
+}
+
+async function copyDealLink() {
+  const url = dealUrl(state);
+  shareField.value = url;
+  shareField.hidden = false;
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      await navigator.clipboard.writeText(url);
+      showToast('Link copied');
+      return;
+    }
+  } catch (error) {
+    void error;
+  }
+  shareField.focus();
+  shareField.select();
+  showToast('Copy the link above');
+}
+
+function showWin() {
+  winCards.textContent = '';
+  const suits = ['\u2660', '\u2665', '\u2666', '\u2663'];
+  for (let i = 0; i < 9; i++) {
+    const card = document.createElement('div');
+    card.className = 'win-card' + (i % 3 === 1 ? ' red' : '');
+    card.textContent = suits[i % 4];
+    card.style.setProperty('--drift', (i - 4) * 46 + 'px');
+    card.style.setProperty('--spin', (i % 2 ? 1 : -1) * (120 + i * 25) + 'deg');
+    card.style.animationDelay = i * 130 + 'ms';
+    winCards.appendChild(card);
+  }
+
+  const seconds = Math.floor(elapsedBase / 1000);
+  const minutes = Math.floor(seconds / 60);
+  overlayBody.innerHTML =
+    '<p class="overlay-time">' + minutes + ':' + String(seconds % 60).padStart(2, '0') + '</p>' +
+    '<p class="overlay-detail">' + state.moves + ' moves</p>';
+  overlay.classList.add('visible');
+}
+
+function hideOverlay() {
+  overlay.classList.remove('visible');
+}
+
+function formatMs(ms) {
+  if (ms == null) return '—';
+  const seconds = Math.floor(ms / 1000);
+  const minutes = Math.floor(seconds / 60);
+  return minutes + ':' + String(seconds % 60).padStart(2, '0');
+}
+
+const VARIANT_NAMES = {
+  klondike: 'Klondike',
+  freecell: 'FreeCell',
+  spider: 'Spider',
+  spiderette: 'Spiderette',
+  fortyThieves: 'Forty Thieves',
+  yukon: 'Yukon',
+};
+
+function statsLabel(key) {
+  const parts = key.split(':');
+  const base = VARIANT_NAMES[parts[0]] || parts[0];
+  if (parts.length === 1) return base;
+  if (parts[0] === 'klondike') {
+    return base + ' · Draw ' + (parts[1] === 'draw3' ? '3' : '1');
+  }
+  if (parts[0] === 'spider') {
+    return base + ' · ' + parts[1] + (parts[1] === '1' ? ' suit' : ' suits');
+  }
+  const suits = parts[1] === '1' ? '1 suit' : parts[1] + ' suits';
+  return base + ' · ' + suits + ' · ' + parts[2] + ' cells';
+}
+
+function chartBlock(title, data) {
+  const max = Math.max(1, ...data.map((item) => item.played));
+  const bars = data
+    .map((item) => {
+      const total = Math.max(2, Math.round((item.played / max) * 66));
+      const won = Math.min(total, Math.round((item.won / max) * 66));
+      const played = total - won;
+      return (
+        '<div class="chart-col" title="' + item.label + ': ' + item.played + ' played, ' + item.won + ' won">' +
+        '<div class="chart-bar" style="height:' + Math.max(1, played) + 'px"></div>' +
+        '<div class="chart-bar won" style="height:' + Math.max(0, won) + 'px"></div>' +
+        '<span class="chart-label">' + item.label + '</span></div>'
+      );
+    })
+    .join('');
+  return '<h4>' + title + '</h4><div class="chart">' + bars + '</div>';
+}
+
+function statTile(value, label) {
+  return '<div class="stat-tile"><div class="stat-tile-value">' + value + '</div><div class="stat-tile-label">' + label + '</div></div>';
+}
+
+function renderStats() {
+  if (!stats) return;
+  const current = stats[statsKey()] || {};
+  const days = current.days || {};
+  const winRate = current.played ? Math.round((current.won / current.played) * 100) + '%' : '—';
+  const busiest = busiestDay(days);
+
+  const tiles = [
+    statTile(current.played || 0, 'Games played'),
+    statTile(current.won || 0, 'Games won'),
+    statTile(winRate, 'Win rate'),
+    statTile(current.streak || 0, 'Current streak'),
+    statTile(current.bestStreak || 0, 'Best streak'),
+    statTile(formatMs(current.fastestWinMs), 'Fastest win'),
+    statTile(longestStreak(days), 'Longest run of days'),
+    statTile(busiest ? busiest.count : 0, 'Busiest day'),
+  ].join('');
+
+  const others = Object.keys(stats)
+    .filter((key) => key !== statsKey())
+    .map((key) => {
+      const entry = stats[key];
+      const rate = entry.played ? Math.round((entry.won / entry.played) * 100) + '%' : '—';
+      return (
+        '<div class="stat-row"><div class="stat-name">' + statsLabel(key) + '</div>' +
+        '<div class="stat-value">' + (entry.won || 0) + ' / ' + (entry.played || 0) + ' won · ' + rate + '</div></div>'
+      );
+    })
+    .join('');
+
+  statsBody.innerHTML =
+    '<div class="stat-name">' + spec().name + '</div>' +
+    '<div class="stat-grid">' + tiles + '</div>' +
+    chartBlock('Games per week', lastWeeks(12, days)) +
+    chartBlock('Games per month', lastMonths(12, days)) +
+    chartBlock('Games per year', lastYears(5, days)) +
+    (others ? '<h4>Other games</h4>' + others : '');
+}
+
+function renderHowTo() {
+  howtoBody.innerHTML = HOW_TO_PLAY.map((item) => '<h4>' + item.title + '</h4><p>' + item.text + '</p>').join('');
+}
+
+function difficultyNotes() {
+  const settings = state.options || {};
+  const notes = [];
+  if (state.variantId === 'klondike') {
+    notes.push('Drawing one card at a time is harder and more traditional, drawing three makes the game noticeably easier.');
+  }
+  if (state.variantId === 'freecell') {
+    notes.push(DIFFICULTY.freecell.suits[settings.suits]);
+    notes.push(DIFFICULTY.freecell.cells[settings.cells]);
+  }
+  if (state.variantId === 'spider') {
+    notes.push(DIFFICULTY.spider[settings.suits]);
+  }
+  if (state.variantId === 'spiderette') {
+    notes.push('A single deck and no stock, so there is far less to juggle than full Spider.');
+  }
+  if (state.variantId === 'fortyThieves') {
+    notes.push('Everything starts face up, so this is the most open of the Spider family.');
+  }
+  if (state.variantId === 'yukon') {
+    notes.push('Groups move in any order, which makes it far more forgiving than Klondike.');
+  }
+  return notes;
+}
+
+function renderRules() {
+  const rules = RULES[state.variantId];
+  if (!rules) {
+    rulesBody.innerHTML = '';
+    return;
+  }
+  const notes = difficultyNotes();
+  rulesBody.innerHTML =
+    '<p><strong>' + spec().name + '</strong> — ' + rules.summary + '</p>' +
+    '<ul>' + rules.points.map((point) => '<li>' + point + '</li>').join('') + '</ul>' +
+    '<h4>Difficulty</h4>' +
+    notes.map((note) => '<p>' + note + '</p>').join('');
+}
+
+function dismissSplash() {
+  if (splash.classList.contains('hidden')) return;
+  splash.classList.add('played');
+  splash.classList.add('hidden');
+}
+
+function startTimer() {
+  stopTimer();
+  sessionStart = Date.now();
+  timerId = setInterval(() => {
+    updateHud();
+  }, 500);
+}
+
+function stopTimer() {
+  if (timerId) {
+    clearInterval(timerId);
+    timerId = null;
+  }
+}
+
+const input = new InputController(tableEl, {
+  state: () => state,
+  layout: () => layout,
+  positions: () => positions,
+  selection: () => selection,
+  select: (value) => {
+    selection = value;
+  },
+  renderer,
+  render,
+  tryMove,
+  autoMove,
+  onStockTap,
+  onFlip,
+  slotAt: (x, y) => hitTest(layout, positions, x, y),
+});
+
+function resetViewportZoom() {
+  const meta = document.querySelector('meta[name="viewport"]');
+  if (!meta) return;
+  meta.setAttribute('content', meta.getAttribute('content'));
+}
+
+function bindButton(id, handler) {
+  const element = document.getElementById(id);
+  if (!element) return;
+  element.addEventListener('click', (event) => {
+    resetViewportZoom();
+    handler(event);
+  });
+}
+
+bindButton('btn-undo', doUndo);
+bindButton('btn-hint', showHint);
+bindButton('btn-new', () => newGame(state.variantId));
+bindButton('btn-new-overlay', () => {
+  hideOverlay();
+  newGame(state.variantId);
+});
+bindButton('btn-close-overlay', hideOverlay);
+bindButton('btn-stats', () => {
+  const opening = !panel.classList.contains('visible');
+  panel.classList.toggle('visible');
+  if (opening) {
+    renderDeal();
+    renderHowTo();
+    renderRules();
+    renderStats();
+  }
+});
+bindButton('btn-stats-close', () => panel.classList.remove('visible'));
+bindButton('btn-again', () => {
+  newGame(state.variantId, Object.assign({}, state.options, { seed: state.seed }));
+});
+bindButton('btn-daily', () => {
+  newGame(state.variantId, Object.assign({}, state.options, { seed: dailySeed() }));
+});
+bindButton('btn-share', copyDealLink);
+
+bindButton('btn-giveup', () => {
+  if (!state || finished) return;
+  confirmDetail.textContent = position.dead
+    ? position.reason + ' The game will be counted as played, but not as a win.'
+    : 'It counts as a game played, but not as a win.';
+  confirmDialog.classList.add('visible');
+});
+
+bindButton('btn-cancel-giveup', () => {
+  confirmDialog.classList.remove('visible');
+});
+
+bindButton('btn-confirm-giveup', async () => {
+  confirmDialog.classList.remove('visible');
+  if (!state || finished) return;
+  const key = statsKey();
+  const elapsed = currentElapsed();
+  finished = true;
+  stopTimer();
+  position = { dead: false, certain: false, moves: 0, short: '', reason: '' };
+  await recordResult(key, false, elapsed);
+  stats = await loadStats();
+  renderStats();
+  newGame(state.variantId);
+  showToast('Game given up. A new deal has been dealt.');
+});
+splash.addEventListener('click', dismissSplash);
+bindButton('btn-reset-stats', async () => {
+  stats = await clearStats();
+  renderStats();
+});
+
+VARIANT_LIST.forEach((entry) => {
+  const button = document.createElement('button');
+  button.className = 'tab';
+  button.textContent = entry.name;
+  button.dataset.variant = entry.id;
+  button.addEventListener('click', () => {
+    if (state.variantId === entry.id) return;
+    hideOverlay();
+    location.hash = entry.id;
+    newGame(entry.id);
+  });
+  variantTabs.appendChild(button);
+});
+
+function updateVariantTabs() {
+  Array.from(variantTabs.children).forEach((button) => {
+    button.classList.toggle('active', button.dataset.variant === state.variantId);
+  });
+}
+
+function updateOptionTabs() {
+  optionTabs.textContent = '';
+  const groups = optionGroups();
+  optionTabs.hidden = groups.length === 0;
+  if (!groups.length) return;
+  const settings = state.options || {};
+
+  groups.forEach((group) => {
+    const tabs = document.createElement('div');
+    tabs.className = 'tabs';
+    group.choices.forEach((choice) => {
+      const button = document.createElement('button');
+      button.className = 'tab';
+      button.textContent = choice.label;
+      const current = choice.options.suits !== undefined
+        ? settings.suits
+        : choice.options.cells !== undefined
+          ? settings.cells
+          : settings.drawCount;
+      button.classList.toggle('active', choice.value === current);
+      button.addEventListener('click', () => {
+        if (choice.value === current) return;
+        hideOverlay();
+        newGame(state.variantId, Object.assign({}, settings, choice.options));
+      });
+      tabs.appendChild(button);
+    });
+    optionTabs.appendChild(tabs);
+  });
+}
+
+const originalRender = render;
+window.addEventListener('resize', () => {
+  originalRender();
+});
+
+window.addEventListener('orientationchange', () => {
+  setTimeout(() => originalRender(), 120);
+});
+document.addEventListener('keydown', (event) => {
+  if (event.metaKey || event.ctrlKey || event.altKey) return;
+  const key = event.key.toLowerCase();
+  if (key === 'u') doUndo();
+  else if (key === 'h') showHint();
+  else if (key === 'n') newGame(state.variantId);
+  else if (key === 'escape') {
+    hideOverlay();
+    panel.classList.remove('visible');
+    dismissSplash();
+  }
+});
+
+let lastTouchEnd = 0;
+document.addEventListener(
+  'touchend',
+  (event) => {
+    const now = Date.now();
+    if (now - lastTouchEnd < 320) {
+      if (event.cancelable) event.preventDefault();
+    }
+    lastTouchEnd = now;
+  },
+  { passive: false }
+);
+
+document.addEventListener('dblclick', (event) => {
+  if (event.cancelable) event.preventDefault();
+});
+
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') {
+    elapsedBase = currentElapsed();
+    saveGame(snapshot());
+  } else {
+    sessionStart = Date.now();
+  }
+});
+
+window.addEventListener('pagehide', () => {
+  saveGame(snapshot());
+});
+
+async function boot() {
+  const requested = location.hash.replace('#', '').toLowerCase();
+  let startVariant = 'klondike';
+  let startOptions = null;
+  let startSeed = null;
+
+  if (requested.startsWith('d=')) {
+    const decoded = decodeDeal(requested.slice(2));
+    if (decoded && VARIANT_LIST.some((entry) => entry.id === decoded.variantId)) {
+      startVariant = decoded.variantId;
+      startOptions = decoded.options;
+      startSeed = decoded.seed;
+    }
+  } else if (VARIANT_LIST.some((entry) => entry.id === requested)) {
+    startVariant = requested;
+  }
+
+  const bootOptions = normalizeOptions(startVariant, startOptions);
+  state = createGame(startVariant, startSeed == null ? bootOptions : Object.assign({}, bootOptions, { seed: startSeed }));
+  elapsedBase = 0;
+  sessionStart = Date.now();
+
+  refreshLayout();
+  renderer.setVariant(spec(), layout);
+  render();
+  updateVariantTabs();
+  startTimer();
+
+  stats = await loadStats();
+  renderStats();
+
+  const saved = await loadGame();
+  const restored = saved ? deserialize(saved) : null;
+
+  if (restored && !restored.won) {
+    state = restored;
+    elapsedBase = restored.elapsedMs || 0;
+    sessionStart = Date.now();
+    render();
+  } else {
+    recordDeal(statsKey()).then((next) => {
+      stats = next;
+      renderStats();
+    });
+  }
+
+  if (!window.__SOLITAIRE_INLINE__ && 'serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  }
+}
+
+boot();
+
+window.__solitaire = {
+  state: () => state,
+  layout: () => layout,
+  selection: () => selection,
+  legal: () => legalMoves(state),
+  tryMove,
+  render,
+  select: (value) => {
+    selection = value;
+    render();
+  },
+  newGame,
+  load: (raw) => {
+    const restored = deserialize(raw);
+    if (!restored) return false;
+    state = restored;
+    elapsedBase = restored.elapsedMs || 0;
+    sessionStart = Date.now();
+    finished = false;
+    selection = null;
+    render();
+    return true;
+  },
+};
+
+})();
+</script>
+<script>
+  if (location.protocol === 'file:') {
+    setTimeout(function () {
+      var table = document.getElementById('table');
+      if (table && !table.querySelector('.card')) {
+        document.getElementById('file-warning').hidden = false;
+      }
+    }, 1500);
+  }
+</script>
+</body>
+</html>

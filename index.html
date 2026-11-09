@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+<title>Solitaire</title>
+<meta name="description" content="Klondike and FreeCell solitaire, playable offline on iPad." />
+<meta name="theme-color" content="#0e3b2e" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Solitaire" />
+<link rel="manifest" href="manifest.webmanifest" />
+<link rel="apple-touch-icon" href="icons/icon-180.png" />
+<link rel="icon" href="icons/icon-192.png" />
+<link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+<div id="app">
+  <header id="hud">
+    <div class="hud-left">
+      <button id="btn-stats" class="icon-button" aria-label="Statistics">&#9776;</button>
+      <div class="hud-title">
+        <span id="variant-name">Solitaire</span>
+        <span id="banner" class="banner"></span>
+      </div>
+    </div>
+    <div class="hud-right">
+      <span id="timer" class="hud-chip">0:00</span>
+      <span id="moves" class="hud-chip">0 moves</span>
+    </div>
+  </header>
+
+  <main id="board">
+    <div id="table"></div>
+    <div id="file-warning" hidden>
+      <div class="warning-card">
+        <h3>Open this over a web server</h3>
+        <p>
+          Browsers block JavaScript modules on <code>file://</code> pages, so the board
+          cannot start when this file is opened straight from the Finder.
+        </p>
+        <p>Pick either option:</p>
+        <ul>
+          <li><strong>Play it now:</strong> open <code>dist/solitaire.html</code> — one self-contained file that works from anywhere.</li>
+          <li><strong>Serve it:</strong> run <code>npm run dev</code> in this folder and open the printed URL.</li>
+        </ul>
+      </div>
+    </div>
+  </main>
+
+  <footer id="controls">
+    <div class="tab-groups">
+      <div id="variant-tabs" class="tabs"></div>
+      <div id="option-tabs" class="tabs"></div>
+    </div>
+    <div class="control-buttons">
+      <button id="btn-undo" class="control">Undo</button>
+      <button id="btn-hint" class="control">Hint</button>
+      <button id="btn-giveup" class="control danger">Give up</button>
+      <button id="btn-new" class="control primary">New</button>
+    </div>
+  </footer>
+</div>
+
+<section id="panel" class="panel">
+  <div class="panel-header">
+    <h2>Solitaire</h2>
+    <button id="btn-stats-close" class="icon-button" aria-label="Close">&#10005;</button>
+  </div>
+  <div class="panel-body">
+    <div class="panel-section">
+      <h3>This deal</h3>
+      <div id="deal-body" class="prose"></div>
+      <div class="deal-actions">
+        <button id="btn-again" class="control">Deal again</button>
+        <button id="btn-daily" class="control">Daily deal</button>
+        <button id="btn-share" class="control">Share</button>
+      </div>
+      <input id="share-field" class="share-field" readonly hidden />
+    </div>
+    <div class="panel-section">
+      <h3>How to play</h3>
+      <div id="howto-body" class="prose"></div>
+    </div>
+    <div class="panel-section">
+      <h3>Rules</h3>
+      <div id="rules-body" class="prose"></div>
+    </div>
+    <div class="panel-section">
+      <h3>Statistics</h3>
+      <div id="stats-body" class="prose"></div>
+    </div>
+  </div>
+  <button id="btn-reset-stats" class="control subtle">Reset statistics</button>
+</section>
+
+<div id="splash" class="splash">
+  <div class="splash-inner">
+    <div class="splash-logo" aria-hidden="true">
+      <div class="logo-slot logo-slot-1"><div class="logo-card"><span class="logo-rank">A</span><span class="logo-suit">&#9824;</span></div></div>
+      <div class="logo-slot logo-slot-2"><div class="logo-card"><span class="logo-rank">K</span><span class="logo-suit red">&#9829;</span></div></div>
+      <div class="logo-slot logo-slot-3"><div class="logo-card"><span class="logo-rank">Q</span><span class="logo-suit red">&#9830;</span></div></div>
+    </div>
+    <h1 class="splash-title">Solitaire</h1>
+    <p class="splash-tagline">Totally Ad-free for Opa</p>
+    <p class="splash-credit">designed by Butch</p>
+    <button id="splash-play" class="splash-play">Tap to play</button>
+    <p class="splash-foot">Klondike &middot; FreeCell &middot; Spider</p>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<div id="confirm" class="overlay">
+  <div class="overlay-card">
+    <h2>Give up this game?</h2>
+    <p id="confirm-detail">It counts as a game played, but not as a win.</p>
+    <div class="overlay-actions">
+      <button id="btn-confirm-giveup" class="control danger">Give up</button>
+      <button id="btn-cancel-giveup" class="control">Keep playing</button>
+    </div>
+  </div>
+</div>
+
+<div id="overlay" class="overlay">
+  <div class="win-cards" id="win-cards" aria-hidden="true"></div>
+  <div class="overlay-card">
+    <h2>You won</h2>
+    <div id="overlay-body"></div>
+    <div class="overlay-actions">
+      <button id="btn-new-overlay" class="control primary">New game</button>
+      <button id="btn-close-overlay" class="control">Close</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="src/main.js"></script>
+<script>
+  if (location.protocol === 'file:') {
+    setTimeout(function () {
+      var table = document.getElementById('table');
+      if (table && !table.querySelector('.card')) {
+        document.getElementById('file-warning').hidden = false;
+      }
+    }, 1500);
+  }
+</script>
+</body>
+</html>
