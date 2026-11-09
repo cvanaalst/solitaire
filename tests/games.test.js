@@ -269,3 +269,18 @@ test('a healthy position is never reported as dead', () => {
   const freecell = createGame('freecell', { seed: 5 });
   assert.equal(analyzePosition(freecell).dead, false);
 });
+
+test('the history keeps the elapsed time so an undo can restore it', () => {
+  const state = emptyState('klondike');
+  state.piles.tableau[0].push(card('H', 8));
+  state.piles.tableau[1].push(card('S', 7));
+  state.elapsedMs = 42000;
+
+  const moved = applyMove(state, { pile: PILE.TABLEAU, index: 1, cardIndex: 0 }, { pile: PILE.TABLEAU, index: 0 });
+  assert.ok(moved);
+  assert.equal(moved.history[moved.history.length - 1].elapsedMs, 42000);
+
+  const reverted = undo(moved);
+  assert.equal(reverted.elapsedMs, 42000);
+  assert.equal(reverted.moves, 0);
+});

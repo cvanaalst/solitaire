@@ -227,8 +227,10 @@ function refreshPosition() {
 
 function onStateChanged() {
   if (state.won && !finished) {
+    const elapsed = currentElapsed();
     finished = true;
-    elapsedBase = currentElapsed();
+    elapsedBase = elapsed;
+    state.elapsedMs = elapsed;
     stopTimer();
     recordResult(statsKey(), true, elapsedBase).then((next) => {
       stats = next;
@@ -240,8 +242,14 @@ function onStateChanged() {
   scheduleSave();
 }
 
+function syncElapsed() {
+  if (!state) return;
+  state.elapsedMs = currentElapsed();
+}
+
 function tryMove(from, to) {
   if (!state || !from || !to) return false;
+  syncElapsed();
   const next = applyMove(state, from, to);
   if (!next) return false;
   state = next;
@@ -274,6 +282,7 @@ function maybeAutoFinish() {
 
 function onStockTap() {
   if (spec().dealRows) {
+    syncElapsed();
     const dealt = applyDealRow(state);
     if (dealt) {
       state = dealt;
@@ -298,6 +307,7 @@ function onStockTap() {
 }
 
 function onFlip(columnIndex) {
+  syncElapsed();
   const next = applyFlip(state, columnIndex);
   if (!next) return;
   state = next;
@@ -343,6 +353,7 @@ function showHint() {
 }
 
 function doUndo() {
+  syncElapsed();
   const next = undo(state);
   if (!next) return;
   state = next;
