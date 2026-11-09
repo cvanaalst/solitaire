@@ -1,4 +1,4 @@
-const CACHE = 'solitaire-v7';
+const CACHE = 'solitaire-v8';
 
 const ASSETS = [
   './',
@@ -13,10 +13,22 @@ const ASSETS = [
   './src/render.js',
   './src/input.js',
   './src/persist.js',
+  './src/rules.js',
+  './src/stats.js',
+  './src/deals.js',
   './icons/icon-180.png',
   './icons/icon-192.png',
   './icons/icon-512.png',
 ];
+
+const NETWORK_TIMEOUT = 3000;
+
+function withTimeout(promise, ms) {
+  return Promise.race([
+    promise,
+    new Promise((_, reject) => setTimeout(() => reject(new Error('network timeout')), ms)),
+  ]);
+}
 
 self.addEventListener('install', (event) => {
   event.waitUntil(
@@ -37,6 +49,25 @@ self.addEventListener('activate', (event) => {
   );
 });
 
+async function handle(request) {
+  const cache = await caches.open(CACHE);
+  try {
+    const response = await withTimeout(fetch(request), NETWORK_TIMEOUT);
+    if (response && response.status === 200 && response.type === 'basic') {
+      cache.put(request, response.clone());
+    }
+    return response;
+  } catch (error) {
+    const cached = await cache.match(request);
+    if (cached) return cached;
+    if (request.mode === 'navigate') {
+      const fallback = await cache.match('./index.html');
+      if (fallback) return fallback;
+    }
+    throw error;
+  }
+}
+
 self.addEventListener('fetch', (event) => {
   const request = event.request;
   if (request.method !== 'GET') return;
@@ -44,19 +75,5 @@ self.addEventListener('fetch', (event) => {
   const url = new URL(request.url);
   if (url.origin !== self.location.origin) return;
 
-  event.respondWith(
-    caches.match(request).then((cached) => {
-      const network = fetch(request)
-        .then((response) => {
-          if (response && response.status === 200 && response.type === 'basic') {
-            const copy = response.clone();
-            caches.open(CACHE).then((cache) => cache.put(request, copy));
-          }
-          return response;
-        })
-        .catch(() => cached || caches.match('./index.html'));
-
-      return cached || network;
-    })
-  );
+  event.respondWith(handle(request));
 });

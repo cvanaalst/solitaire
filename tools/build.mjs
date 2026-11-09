@@ -1,4 +1,5 @@
-import { readFile, writeFile, mkdir, mkdtemp } from 'node:fs/promises';
+import { readFile, writeFile, mkdir, mkdtemp, rm, copyFile } from 'node:fs/promises';
+import { createHash } from 'node:crypto';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { tmpdir } from 'node:os';
@@ -10,6 +11,27 @@ const run = promisify(execFile);
 const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const OUT_DIR = join(ROOT, 'dist');
 const OUT_FILE = join(OUT_DIR, 'solitaire.html');
+const SITE_DIR = join(OUT_DIR, 'site');
+
+const SITE_ASSETS = [
+  'index.html',
+  'styles.css',
+  'manifest.webmanifest',
+  'src/cards.js',
+  'src/deals.js',
+  'src/engine.js',
+  'src/input.js',
+  'src/layout.js',
+  'src/main.js',
+  'src/persist.js',
+  'src/render.js',
+  'src/rules.js',
+  'src/stats.js',
+  'src/variants.js',
+  'icons/icon-180.png',
+  'icons/icon-192.png',
+  'icons/icon-512.png',
+];
 
 const MODULES = [
   'src/cards.js',
@@ -161,6 +183,34 @@ async function build() {
 
   const kb = (Buffer.byteLength(output) / 1024).toFixed(1);
   console.log('built ' + OUT_FILE + ' (' + kb + ' KB, single file, runs from file://)');
+
+  const version = await assetVersion();
+  const swSource = await readFile(join(ROOT, 'sw.js'), 'utf8');
+  if (!/const CACHE = '[^']+'/.test(swSource)) {
+    throw new Error('sw.js has no CACHE constant to replace');
+  }
+  const sw = swSource.replace(/const CACHE = '[^']+';/, "const CACHE = 'solitaire-" + version + "';");
+
+  await rm(SITE_DIR, { recursive: true, force: true });
+  for (const asset of SITE_ASSETS) {
+    const target = join(SITE_DIR, asset);
+    await mkdir(dirname(target), { recursive: true });
+    await copyFile(join(ROOT, asset), target);
+  }
+  await writeFile(join(SITE_DIR, 'sw.js'), sw, 'utf8');
+  await mkdir(join(SITE_DIR, 'dist'), { recursive: true });
+  await writeFile(join(SITE_DIR, 'dist', 'solitaire.html'), output, 'utf8');
+
+  console.log('built ' + SITE_DIR + ' (service worker cache: solitaire-' + version + ')');
+}
+
+async function assetVersion() {
+  const hash = createHash('sha256');
+  for (const asset of SITE_ASSETS) {
+    hash.update(asset);
+    hash.update(await readFile(join(ROOT, asset)));
+  }
+  return hash.digest('hex').slice(0, 10);
 }
 
 build().catch((error) => {
