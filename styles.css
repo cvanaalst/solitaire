@@ -262,8 +262,8 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(var(--cw) * 0.42);
-  color: rgba(255, 255, 255, 0.12);
+  font-size: calc(var(--cw) * 0.52);
+  color: rgba(255, 255, 255, 0.17);
   pointer-events: none;
 }
 
@@ -348,7 +348,7 @@ body {
   align-items: center;
   justify-content: center;
   background: #fffdf7;
-  border: 1px solid rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(0, 0, 0, 0.45);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
   color: #16191f;
 }
@@ -359,10 +359,14 @@ body {
 
 .card-back {
   display: block;
-  background:
-    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.16) 0 3px, transparent 3px 7px),
+  background-color: #17306e;
+  background-image:
+    repeating-linear-gradient(45deg, rgba(255, 255, 255, 0.14) 0 2px, transparent 2px 9px),
+    repeating-linear-gradient(-45deg, rgba(255, 255, 255, 0.14) 0 2px, transparent 2px 9px),
+    radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.22) 0 12%, transparent 13%),
+    radial-gradient(circle at 50% 50%, transparent 0 19%, rgba(255, 255, 255, 0.12) 20% 23%, transparent 24%),
     linear-gradient(150deg, #3363bd 0%, #17306e 100%);
-  border: 2px solid rgba(255, 255, 255, 0.7);
+  border: 2px solid rgba(255, 255, 255, 0.72);
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.35);
 }
 
@@ -392,7 +396,7 @@ body {
   position: absolute;
   display: flex;
   flex-direction: row;
-  align-items: center;
+  align-items: baseline;
   gap: calc(var(--cw) * 0.03);
   line-height: 1;
   font-weight: 700;
@@ -400,26 +404,24 @@ body {
 
 .corner-tl {
   top: 1.5%;
-  left: 4%;
+  left: 3%;
 }
 
 .corner-br {
-  bottom: 1.5%;
-  right: 4%;
-  transform: rotate(180deg);
-}
-
-.rank {
-  font-size: min(calc(var(--cw) * 0.28), calc(var(--strip, 999px) * 0.7));
-}
-
-.suit {
-  font-size: min(calc(var(--cw) * 0.26), calc(var(--strip, 999px) * 0.64));
+  display: none;
 }
 
 .pip {
   font-size: calc(var(--cw) * 0.5);
   line-height: 1;
+}
+
+.rank {
+  font-size: min(calc(var(--cw) * 0.33), calc(var(--strip, 999px) * 0.7));
+}
+
+.suit {
+  font-size: min(calc(var(--cw) * 0.31), calc(var(--strip, 999px) * 0.64));
 }
 
 .badge {

@@ -31,6 +31,17 @@ There is also a single self-contained file, `dist/solitaire.html`, with everythi
 | **Forty Thieves** | 40 cards | One deck without the eights, tens or kings. Everything starts face up. |
 | **Yukon** | 52 cards | Seven long columns, no stock, and groups move whether they are in order or not. |
 
+## The cards
+
+There are no card images at all. Every face is drawn with CSS: a white card
+with a dark edge, a large suit in the middle, and the rank and suit together
+in the top left corner. That keeps the whole app small, sharp at every
+screen size and consistent with itself.
+
+Because a fanned column only shows a sliver of each covered card, the corner
+index is scaled to whatever strip is still visible, so every card in a pile
+can be read at a glance.
+
 ## What it does
 
 - **Six games**, each with its own difficulty settings.
@@ -49,9 +60,13 @@ You need Node 18 or newer for the tooling. The game itself is just static files.
 
 ```bash
 npm run dev      # serve on http://127.0.0.1:8123 and open a browser
-npm test         # run the test suite (71 tests, no dependencies)
+npm test         # run the test suite (72 tests, no dependencies)
 npm run build    # build dist/solitaire.html and dist/site
 ```
+
+No build step is needed to play. `npm run build` produces `dist/solitaire.html`,
+a single self-contained file of about 120KB, and `dist/site`, the version that
+is deployed.
 
 `npm run dev` picks the next free port if 8123 is taken, and prints the address to open. To play on an iPad over Wi-Fi:
 
@@ -127,4 +142,5 @@ Built for iOS 16 and later, and it works in any current version of Safari, Chrom
 
 ## Credits
 
-Designed by **Butch**. Card faces are drawn in CSS rather than shipped as images, so they stay crisp at every screen density and the whole app is a few dozen kilobytes.
+Designed by **Butch**. The cards and the card backs are drawn entirely in
+CSS, so there is no artwork to credit and nothing extra to download.

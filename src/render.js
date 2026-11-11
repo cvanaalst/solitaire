@@ -24,17 +24,7 @@ function createCardElement(card) {
   pip.className = 'pip';
   pip.textContent = SUIT_SYMBOL[card.suit];
 
-  const bottomRight = document.createElement('div');
-  bottomRight.className = 'corner corner-br';
-  const rank2 = document.createElement('span');
-  rank2.className = 'rank';
-  rank2.textContent = RANK_LABEL[card.rank];
-  const suit2 = document.createElement('span');
-  suit2.className = 'suit';
-  suit2.textContent = SUIT_SYMBOL[card.suit];
-  bottomRight.append(rank2, suit2);
-
-  front.append(topLeft, pip, bottomRight);
+  front.append(topLeft, pip);
 
   const back = document.createElement('div');
   back.className = 'card-face card-back';
@@ -171,6 +161,8 @@ export class Renderer {
       element.classList.toggle('is-up', info.card.faceUp);
       element.classList.toggle('is-selected', selectedIds.has(id));
       element.classList.toggle('is-hint', hintIds.has(id));
+      const strip = info.strip || layout.cardH;
+      element.classList.toggle('is-fanned', strip < layout.cardH * 0.62);
       element.dataset.pile = info.pile;
       element.dataset.index = String(info.index);
       element.dataset.column = info.pile === PILE.TABLEAU ? String(info.column) : '';

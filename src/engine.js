@@ -613,6 +613,13 @@ export function findHint(state) {
   const tableau = moves.find((m) => m.to.pile === PILE.TABLEAU);
   if (tableau) return { ...tableau, reason: 'Build down on this pile' };
 
+  if (canDealRow(state)) {
+    return { from: { pile: PILE.STOCK, index: 0, cardIndex: null }, reason: 'Turn over a card from the stock' };
+  }
+
+  const stock = moves.find((m) => m.from.pile === PILE.STOCK);
+  if (stock) return { ...stock, reason: 'Turn over a card from the stock' };
+
   return null;
 }
 

@@ -48,7 +48,7 @@ export function computeLayout(variant, width, height) {
   }
 
   const wasteRoom = foundationsLeft - (waste.x + cardW) - gap;
-  const wasteFan = wasteRoom > 12 ? Math.min(cardW * 0.22, wasteRoom / 2) : 0;
+  const wasteFan = wasteRoom > 12 ? Math.min(cardW * 0.34, wasteRoom / 2) : 0;
 
   const tableau = [];
   for (let i = 0; i < columns; i++) {
@@ -141,7 +141,16 @@ export function computePositions(layout, state) {
   for (let i = 0; i < wasteVisible; i++) {
     const index = wasteCount - wasteVisible + i;
     const card = piles.waste[index];
-    place(card, PILE.WASTE, index, layout.waste.x + i * layout.wasteFan, layout.waste.y, null, layout.cardH);
+    const isTop = index === wasteCount - 1;
+    place(
+      card,
+      PILE.WASTE,
+      index,
+      layout.waste.x + i * layout.wasteFan,
+      layout.waste.y,
+      null,
+      isTop ? layout.cardH : Math.max(12, layout.wasteFan)
+    );
   }
 
   piles.foundations.forEach((col, index) => {

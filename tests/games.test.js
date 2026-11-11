@@ -1,11 +1,34 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 
-import { PILE, analyzePosition, applyMove, canMove, createGame, undo } from '../src/engine.js';
+import { PILE, analyzePosition, applyMove, canMove, createGame, findHint, undo } from '../src/engine.js';
 import { dailySeed, decodeDeal, dealCode, decodeOptions, encodeOptions } from '../src/deals.js';
+import { getSpec } from '../src/variants.js';
 
 function card(suit, rank, faceUp = true) {
   return { id: suit + rank, suit, rank, faceUp };
+}
+
+function makeState(variantId, options = {}) {
+  const spec = getSpec(variantId, options);
+  return {
+    variantId,
+    options: options.options || {},
+    seed: 1,
+    piles: {
+      stock: [],
+      waste: [],
+      freeCells: Array.from({ length: spec.freeCells }, () => []),
+      foundations: Array.from({ length: spec.foundations }, () => []),
+      tableau: spec.tableauRows.map(() => []),
+    },
+    history: [],
+    moves: 0,
+    redeals: 0,
+    startedAt: 0,
+    elapsedMs: 0,
+    won: false,
+  };
 }
 
 test('a seeded game always deals the same cards', () => {
@@ -193,29 +216,9 @@ test('every game deals a full deck and can be undone', () => {
   });
 });
 
-function emptyState(variantId, options = {}) {
-  return {
-    variantId,
-    options: options.options || {},
-    seed: 1,
-    piles: {
-      stock: [],
-      waste: [],
-      freeCells: [],
-      foundations: [[], [], [], []],
-      tableau: [[], [], [], [], [], [], []],
-    },
-    history: [],
-    moves: 0,
-    redeals: 0,
-    startedAt: 0,
-    elapsedMs: 0,
-    won: false,
-  };
-}
 
 test('a position with no moves at all is certainly dead', () => {
-  const state = emptyState('klondike');
+  const state = makeState('klondike');
   state.piles.tableau[0].push(card('H', 7), card('S', 8));
   state.piles.tableau[1].push(card('H', 3), card('D', 4));
   state.piles.tableau[2].push(card('C', 9));
@@ -227,7 +230,7 @@ test('a position with no moves at all is certainly dead', () => {
 });
 
 test('a position that can still be dealt from is not dead', () => {
-  const spider = emptyState('spider');
+  const spider = makeState('spider');
   spider.piles.tableau = [[], [], [], [], [], [], [], [], [], []];
   spider.piles.stock.push(card('S', 5));
   spider.piles.foundations = [[], [], [], [], [], [], [], []];
@@ -237,7 +240,7 @@ test('a position that can still be dealt from is not dead', () => {
 });
 
 test('a klondike that can still be recycled is not dead', () => {
-  const state = emptyState('klondike');
+  const state = makeState('klondike');
   state.piles.tableau[0].push(card('H', 7), card('S', 8));
   state.piles.waste.push(card('H', 3));
 
@@ -246,7 +249,7 @@ test('a klondike that can still be recycled is not dead', () => {
 });
 
 test('klondike with no empty column, no king and no foundation move looks lost', () => {
-  const state = emptyState('klondike');
+  const state = makeState('klondike');
   state.piles.stock = [];
   state.piles.tableau[0].push(card('H', 7), card('S', 8));
   state.piles.tableau[1].push(card('H', 3), card('D', 4));
@@ -271,7 +274,7 @@ test('a healthy position is never reported as dead', () => {
 });
 
 test('the history keeps the elapsed time so an undo can restore it', () => {
-  const state = emptyState('klondike');
+  const state = makeState('klondike');
   state.piles.tableau[0].push(card('H', 8));
   state.piles.tableau[1].push(card('S', 7));
   state.elapsedMs = 42000;
@@ -283,4 +286,22 @@ test('the history keeps the elapsed time so an undo can restore it', () => {
   const reverted = undo(moved);
   assert.equal(reverted.elapsedMs, 42000);
   assert.equal(reverted.moves, 0);
+});
+
+test('the hint falls back to the stock when nothing else can be done', () => {
+  const state = makeState('klondike');
+  state.piles.stock.push(card('S', 5));
+
+  const hint = findHint(state);
+  assert.ok(hint);
+  assert.equal(hint.from.pile, PILE.STOCK);
+  assert.match(hint.reason, /stock/);
+});
+
+test('a card drawn from the stock lands face up', () => {
+  const state = makeState('klondike');
+  state.piles.stock.push(card('S', 5), card('H', 2));
+  const drawn = applyMove(state, { pile: PILE.STOCK, index: 0 }, { pile: PILE.WASTE, index: 0 });
+  assert.equal(drawn.piles.waste.length, 1);
+  assert.equal(drawn.piles.waste[0].faceUp, true);
 });
