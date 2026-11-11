@@ -606,6 +606,16 @@ body {
   color: var(--ink);
 }
 
+.build-info {
+  margin: 12px 0 0;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 11px;
+  color: rgba(244, 247, 245, 0.45);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.2px;
+}
+
 .chart {
   display: flex;
   align-items: flex-end;

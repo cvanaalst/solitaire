@@ -49,6 +49,7 @@ const confirmDialog = document.getElementById('confirm');
 const confirmDetail = document.getElementById('confirm-detail');
 const giveUpButton = document.getElementById('btn-giveup');
 const splashVersion = document.getElementById('splash-version');
+const buildInfo = document.getElementById('build-info');
 
 const renderer = new Renderer(tableEl);
 
@@ -585,6 +586,28 @@ function renderRules() {
 
 let pendingUpdateMessage = '';
 
+function versionDetails() {
+  const meta = document.querySelector('meta[name="app-version"]');
+  const dateMeta = document.querySelector('meta[name="app-build-date"]');
+  const value = meta ? meta.getAttribute('content') : '';
+  const [release, build] = value.split('+');
+  const date = dateMeta ? dateMeta.getAttribute('content') : '';
+  return { release, build, date };
+}
+
+function showBuildInfo() {
+  if (!buildInfo) return;
+  const details = versionDetails();
+  if (!details.release || details.release === 'dev') {
+    buildInfo.textContent = 'Development build';
+    return;
+  }
+  const parts = ['Version ' + details.release];
+  if (details.build) parts.push('build ' + details.build);
+  if (details.date && details.date !== 'unknown') parts.push('built ' + details.date);
+  buildInfo.textContent = parts.join(' \u00b7 ');
+}
+
 function showVersion() {
   const meta = document.querySelector('meta[name="app-version"]');
   const value = meta ? meta.getAttribute('content') : '';
@@ -687,6 +710,7 @@ bindButton('btn-stats', () => {
     renderHowTo();
     renderRules();
     renderStats();
+    showBuildInfo();
   }
 });
 bindButton('btn-stats-close', () => panel.classList.remove('visible'));
@@ -834,6 +858,7 @@ window.addEventListener('pagehide', () => {
 
 async function boot() {
   showVersion();
+  showBuildInfo();
   const requested = location.hash.replace('#', '').toLowerCase();
   let startVariant = 'klondike';
   let startOptions = null;

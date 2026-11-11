@@ -9,6 +9,27 @@ const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const PREFERRED = Number(process.env.PORT) || 8123;
 const HOST = process.env.HOST || '127.0.0.1';
 
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+function buildDate(date = new Date()) {
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  return date.getDate() + ' ' + MONTHS[date.getMonth()] + ' ' + date.getFullYear() + ', ' + hours + ':' + minutes;
+}
+
+async function stampVersion(html) {
+  let version = '0.0.0';
+  try {
+    const pkg = JSON.parse(await readFile(join(ROOT, 'package.json'), 'utf8'));
+    version = pkg.version || version;
+  } catch (error) {
+    void error;
+  }
+  return html
+    .replace('<meta name="app-version" content="dev" />', '<meta name="app-version" content="' + version + '+dev" />')
+    .replace('<meta name="app-build-date" content="unknown" />', '<meta name="app-build-date" content="' + buildDate() + '" />');
+}
+
 function lanAddresses() {
   const found = [];
   for (const entries of Object.values(networkInterfaces())) {
@@ -50,7 +71,10 @@ function handle(req, res) {
   }
 
   readFile(target)
-    .then((body) => send(res, 200, body, TYPES[extname(target)] || 'application/octet-stream'))
+    .then(async (body) => {
+      if (target.endsWith('index.html')) body = await stampVersion(body.toString('utf8'));
+      send(res, 200, body, TYPES[extname(target)] || 'application/octet-stream');
+    })
     .catch((error) => {
       if (error.code === 'ENOENT' || error.code === 'EISDIR') {
         send(res, 404, 'Not found: ' + pathname);

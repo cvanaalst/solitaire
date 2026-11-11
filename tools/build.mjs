@@ -161,8 +161,12 @@ async function build() {
   const version = await assetVersion(release);
   const versionTag =
     '<meta name="app-version" content="' + release + '+' + version + '" />';
+  const dateTag =
+    '<meta name="app-build-date" content="' + buildDate() + '" />';
 
-  const siteHtml = html.replace('<meta name="app-version" content="dev" />', versionTag);
+  const siteHtml = html
+    .replace('<meta name="app-version" content="dev" />', versionTag)
+    .replace('<meta name="app-build-date" content="unknown" />', dateTag);
 
   let output = siteHtml
     .replace(
@@ -215,6 +219,16 @@ async function build() {
   console.log(
     'built ' + SITE_DIR + ' (version ' + release + ', service worker cache: solitaire-' + version + ')'
   );
+}
+
+function buildDate(date = new Date()) {
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  const day = date.getDate();
+  const month = months[date.getMonth()];
+  const year = date.getFullYear();
+  const hours = String(date.getHours()).padStart(2, '0');
+  const minutes = String(date.getMinutes()).padStart(2, '0');
+  return day + ' ' + month + ' ' + year + ', ' + hours + ':' + minutes;
 }
 
 async function assetVersion(release) {
